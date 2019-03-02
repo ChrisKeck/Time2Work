@@ -1,0 +1,27 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+env = "*"
+pandas = "*"
+flask-logging = "*"
+flask-logger = "*"
+flask-logging-extras = "*"
+flask-logconfig = "*"
+requests = "*"
+arrow = "*"
+datetime = "*"
+ctypes = "*"
+ctypeslib = "*"
+pylint = "==2.3.0"
+pylintrc = "*"
+pylint-venv = "*"
+pylintpluginutils = "*"
+ctypeslib2 = "*"
+
+[requires]
+python_version = "3.6"
