@@ -8,13 +8,13 @@ from datetime import datetime
 from os import environ
 
 import requests
+from urllib3.exceptions import RequestError
+
 from Env.Utils import TimesFormatter
 from config import LOGGER
-from urllib3.exceptions import RequestError
 
 
 class TimeReader:
-
 
     def __init__(self, cookies: str):
         self.cookies = cookies
@@ -25,20 +25,19 @@ class TimeReader:
 
     def readText(self, date: datetime) -> str:
         result = self._readTime(date)
-
+        result = result.replace("\n", "")
         LOGGER.debug("Daten wurden geladen:\n" + result)
         return result
 
     def _createUrl(self, date: datetime) -> str:
         urltime = "{2}!2i{1}!3i{0}!2m3!1i{2}!2i{1}!3i{0}".format(
-                date.day, date.month - 1, date.year)
+            date.day, date.month - 1, date.year)
         url = "https://www.google.de/maps/timeline/kml?authuser=0&pb=!1m8!1m3!1i" + urltime
         LOGGER.debug("Download-Link wurd ermittelt:\n" + url)
         return url
 
 
 class WebrequestReader(TimeReader):
-
 
     def __init___(self, cookies: str):
         super(WebrequestReader, self, ).__init__(cookies)
@@ -64,7 +63,6 @@ class WebrequestReader(TimeReader):
 
 class Cmd2FileReader(TimeReader):
 
-
     def __createKml(self, date: datetime) -> str:
         url = self._createUrl(date)
         command = self.cookies.replace("$(URL)", url)
@@ -72,7 +70,7 @@ class Cmd2FileReader(TimeReader):
 
     def __getTempPath(self, date: datetime) -> str:
         path = os.path.join(
-                environ['TEMP'], "{0}.{1}.{2}_Maps.kml".format(date.year, date.month, date.day))
+            environ['TEMP'], "{0}.{1}.{2}_Maps.kml".format(date.year, date.month, date.day))
         return path
 
     def _readTime(self, date: datetime) -> str:
@@ -93,7 +91,6 @@ class Cmd2FileReader(TimeReader):
 
 
 class TimelineReader:
-
 
     def __init__(self, reader: TimeReader):
         self.reader = reader

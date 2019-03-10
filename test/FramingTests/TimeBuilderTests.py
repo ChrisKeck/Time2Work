@@ -3,10 +3,11 @@
 import unittest
 from datetime import datetime, time
 
+from pandas.core.frame import DataFrame
+
 from Env.TimeConstants import GOOGLE
 from Framing.Common import FrameBuilder, TimeBuilder
 from config import LOGGER
-from pandas.core.frame import DataFrame
 
 
 class TimeBuilderTest(unittest.TestCase):
@@ -25,7 +26,7 @@ class TimeBuilderTest(unittest.TestCase):
     def testBuildFrame(self):
         builder = self.createBuilder(datetime(2000, 1, 1))
 
-        df = builder.buildFrame(self.df)
+        df = builder.build_frame(self.df)
 
         LOGGER.debug(df.to_string())
         assert GOOGLE.BeginDate in df.columns
@@ -37,7 +38,7 @@ class TimeBuilderTest(unittest.TestCase):
     def testDateBuildFrame(self):
         builder = self.createBuilder(datetime(2000, 1, 1))
 
-        df: DataFrame = builder.buildFrame(self.df)
+        df: DataFrame = builder.build_frame(self.df)
 
         self.assertEqual(df.get_value(0, GOOGLE.BeginDate),
                          datetime(2000, 1, 1).date(), "")
@@ -47,7 +48,7 @@ class TimeBuilderTest(unittest.TestCase):
     def testTimeBuildFrame(self):
         builder = self.createBuilder(datetime(2000, 1, 1))
 
-        df: DataFrame = builder.buildFrame(self.df)
+        df: DataFrame = builder.build_frame(self.df)
 
         LOGGER.debug(df.to_string())
         self.assertEqual(df.get_value(0, GOOGLE.BeginTime),
@@ -57,7 +58,7 @@ class TimeBuilderTest(unittest.TestCase):
     def testDurationBuildFrame(self):
         builder = self.createBuilder(datetime(2000, 1, 1))
 
-        df = builder.buildFrame(self.df)
+        df = builder.build_frame(self.df)
 
         LOGGER.debug(df.to_string())
         self.assertEqual(df.get_value(0, GOOGLE.Duration), 90)

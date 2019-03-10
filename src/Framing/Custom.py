@@ -4,24 +4,24 @@
 from datetime import time
 
 import numpy
+from pandas.core.frame import DataFrame
+from pandas.core.series import Series
+
 from Env.TimeConstants import GOOGLE
 from Env.Utils import TimesFormatter
 from Framing.Common import FrameBuilder
 from config import LOGGER
-from pandas.core.frame import DataFrame
-from pandas.core.series import Series
 
 
 class PauseDurationBuilder(FrameBuilder):
 
+    def _build_data(self, df: object) -> object:
+        def set_pause(row):
+            return self.__set_pause(row)
 
-    def _build_Data(self, df) -> DataFrame:
-        def setPause(row):
-            return self.__setPause(row)
+        return self._call_each_row(df, set_pause)
 
-        return self._callEachRow(df, setPause)
-
-    def __setPause(self, row):
+    def __set_pause(self, row):
         begin = row[GOOGLE.BeginTime]
         if not isinstance(begin, time):
             begin = begin.get(GOOGLE.BeginTime, -1)
@@ -30,52 +30,51 @@ class PauseDurationBuilder(FrameBuilder):
             end = end.get(GOOGLE.EndTime, -1)
         dur = TimesFormatter.calculateDuration(begin,
                                                end)
-        oldDur = row[GOOGLE.Duration]
-        if isinstance(oldDur, Series):
-            oldDur = oldDur.get(GOOGLE.Duration, -1)
-        row[GOOGLE.Pause] = dur - oldDur
+        old_dur = row[GOOGLE.Duration]
+        if isinstance(old_dur, Series):
+            old_dur = old_dur.get(GOOGLE.Duration, -1)
+        row[GOOGLE.Pause] = dur - old_dur
         return row
 
 
 class WorkplaceBuilder(FrameBuilder):
 
-
-    def __init__(self, placesToWork: dict):
+    def __init__(self, places_to_work: dict):
 
         super(WorkplaceBuilder, self).__init__()
-        LOGGER.info("Arbeitsplätze: " + str(placesToWork))
-        if len(placesToWork.keys()) == 0:
+        LOGGER.info("Arbeitsplätze: " + str(places_to_work))
+        if len(places_to_work.keys()) == 0:
             raise ValueError("Keine Arbeitsplätze vorhanden")
-        self.places_to_work = placesToWork
+        self.places_to_work = places_to_work
 
-    def _build_Data(self, df: DataFrame) -> DataFrame:
-        df = self._addColumn(df, GOOGLE.Workplace, df[GOOGLE.Name])
+    def _build_data(self, df: DataFrame) -> DataFrame:
+        df = self._add_column(df, GOOGLE.Workplace, df[GOOGLE.Name])
 
         def markWork(x):
             return self.__markWork(x)
 
-        return self._callEachRow(df, markWork)
+        return self._call_each_row(df, markWork)
 
-    def isWorkplace(self, row, workplaces):
+    def is_workplace(self, row, workplaces):
         name = row[GOOGLE.Name]
         adress = row[GOOGLE.Address]
         if not isinstance(adress, str) and numpy.isnan(adress):
             adress = None
-        isWork = False
+        is_work = False
         for work in workplaces:
             text: str = str(work)
             if (name and text.find(name) > -1) or \
                     (adress and text.find(adress) > -1):
-                isWork = True
+                is_work = True
                 break
-        return isWork
+        return is_work
 
     def __markWork(self, row):
         for elem in self.places_to_work:
             workplaces: list = self.places_to_work.get(elem)
-            isWorkplace = self.isWorkplace(row, workplaces)
+            is_workplace = self.is_workplace(row, workplaces)
             value = ""
-            if isWorkplace:
+            if is_workplace:
                 value = str(elem)
                 LOGGER.info("Der Arbeitsplatz " + elem +
                             " wurde gefunden")

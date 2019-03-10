@@ -6,6 +6,8 @@ from datetime import datetime
 from os import path
 
 import pandas
+from pandas.core.frame import DataFrame
+
 from Env.Utils import logFrame
 from Framing.Common import (BuildContainer, FrameBuilder, IndexBuilder, TimeBuilder)
 from Framing.Custom import PauseDurationBuilder, WorkplaceBuilder
@@ -15,13 +17,12 @@ from Working.FrameCollectors import FrameCollector
 from Working.FrameSavers import ExcelFrameSaver
 from Working.TimeReaders import Cmd2FileReader, TimeReader, TimelineReader
 from config import LOGGER
-from pandas.core.frame import DataFrame
 
 
 class Transformer(object):
 
-
-    def __create_framebuilder(self) -> FrameCollector:
+    @staticmethod
+    def __create_framebuilder() -> FrameCollector:
         framebuilder = FrameCollector()
         return framebuilder
 
@@ -30,13 +31,13 @@ class Transformer(object):
         framebuilder: FrameCollector = self.__create_framebuilder()
         other = framebuilder.build(text)
         builder = self._createBuilder(elem)
-        other = builder.buildFrame(other)
+        other = builder.build_frame(other)
         LOGGER.info("Frame built For " + repr(elem) + "\n" + repr(other))
         return other
 
     def __tranform_to_frame(self,
-                            date_von: datetime,
-                            date_bis: datetime) -> DataFrame:
+                            date_von: object,
+                            date_bis: object) -> DataFrame:
         time_reader = self._create_timereader()
         text_date_dict: dict = time_reader.readTime(date_von, date_bis)
         df = DataFrame()
@@ -52,9 +53,10 @@ class Transformer(object):
                 df = df.append(other)
         return df
 
-    def __clean(self, df, item):
+    @staticmethod
+    def __clean(df: DataFrame, item):
         cleaned = df.copy(deep=True)
-        cleaned = item.buildFrame(cleaned)
+        cleaned = item.build_frame(cleaned)
         return cleaned
 
     def transform(self, date_von: datetime,
@@ -70,9 +72,9 @@ class Transformer(object):
                                       "error_" + path.basename(item))
                 logFrame(df, item, "Das ursprüngliche DataFrame wird wegen keinen Daten \
                                     unter dem Pfad %s gespeichert.".format(errorpath))
-                self._saveFrame(df, errorpath)
+                self._save_frame(df, errorpath)
             else:
-                self._saveFrame(cleaned, str(item))
+                self._save_frame(cleaned, str(item))
 
     @abstractmethod
     def _createBuilder(self, dat: datetime) -> FrameBuilder:
@@ -88,12 +90,11 @@ class Transformer(object):
         raise NotImplementedError("_create_reader ist abstrakt!")
 
     @abstractmethod
-    def _saveFrame(self, df: DataFrame, path: str) -> None:
-        raise NotImplementedError("_saveFrame ist abstrakt!")
+    def _save_frame(self, df: DataFrame, path: str) -> None:
+        raise NotImplementedError("_save_frame ist abstrakt!")
 
 
 class CommandToExcelTransformer(Transformer):
-
 
     def __init__(self, content: str, workplaces: dict):
         super(CommandToExcelTransformer, self).__init__()
@@ -109,7 +110,7 @@ class CommandToExcelTransformer(Transformer):
                                DurationGroupBuilder(list(wp.keys().__iter__())),
                                PauseDurationBuilder()])
 
-    def _saveFrame(self, df: DataFrame, path: str) -> None:
+    def _save_frame(self, df: DataFrame, path: str) -> None:
         frsa = ExcelFrameSaver()
         frsa.save(df, path)
 
@@ -120,17 +121,18 @@ class CommandToExcelTransformer(Transformer):
 
 class FramePublisher:
 
-
-    def __init__(self, framepath):
-        self.df = pandas.read_excel(framepath)
+    def __init__(self, framepath: str) -> None:
+        # self.df = pandas.read_excel(framepath)
+        pass
 
     def integrate(self, other: DataFrame):
-        df: DataFrame = self.df
+        # df: DataFrame = self.df
+        # self._log_frame(df, self)
+        # self._logFrame(repr(df.to_dict()), self)
+        pass
 
-        # self._logFrame(df, self)
-        self._logFrame(repr(df.to_dict()), self)
-
-    def _logFrame(self, df, inst=None):
+    @staticmethod
+    def _logFrame(df: object, inst: object = None) -> None:
         name = inst
         with pandas.option_context('display.max_rows', None, 'display.max_columns', None):
             LOGGER.warning("##########\nGesamtes Frame in Klasse \"%s\":\n%s\n#############",

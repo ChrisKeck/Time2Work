@@ -2,17 +2,17 @@
 # -*- coding: utf-8 -*-
 from abc import ABC, abstractmethod
 
-from Env.TimeConstants import GOOGLE
-from Framing.Common import FrameBuilder
 from numpy import datetime64
 from pandas.core.frame import DataFrame
-from pandas.core.groupby.groupby import DataFrameGroupBy
+from pandas.core.groupby import DataFrameGroupBy
+
+from Env.TimeConstants import GOOGLE
+from Framing.Common import FrameBuilder
 
 
 class _GroupBuilder(FrameBuilder):
 
-
-    def _build_Data(self, df: DataFrame) -> DataFrame:
+    def _build_data(self, df: DataFrame) -> DataFrame:
         df = self._initFrame(df)
         grp = self._createGroup(df)
         agggrp = self.__aggregateGroup(grp)
@@ -39,25 +39,23 @@ class _GroupBuilder(FrameBuilder):
 
 class DurationGroupBuilder(_GroupBuilder, ABC):
 
-
     def __init__(self, workplaces: list):
         super(DurationGroupBuilder, self).__init__()
         self.workplaces = workplaces
 
     def __filterValues(self, df, datum: datetime64):
-
         data = DataFrame()
         for it in self.workplaces:
             dfTogrp = df[df[GOOGLE.Workplace] == it]
             dfTogrp = dfTogrp[(dfTogrp[GOOGLE.BuildDate] >= datum) &
                               (dfTogrp[GOOGLE.BuildDate] <= datum)]
             if not dfTogrp.empty:
-                dfTogrp = self._addColumn(dfTogrp, GOOGLE.Workplace, it)
-                dfTogrp = self._addColumn(dfTogrp, GOOGLE.BuildDate, datum)
+                dfTogrp = self._add_column(dfTogrp, GOOGLE.Workplace, it)
+                dfTogrp = self._add_column(dfTogrp, GOOGLE.BuildDate, datum)
                 data = data.append(dfTogrp)
         return data
 
-    def _build_Data(self, df: DataFrame) -> DataFrame:
+    def _build_data(self, df: DataFrame) -> DataFrame:
         selectedDates = list()
         newDf = DataFrame()
         for item in df[GOOGLE.BuildDate].get_values():
@@ -68,20 +66,24 @@ class DurationGroupBuilder(_GroupBuilder, ABC):
             filtereddf = self.__filterValues(df, datum)
             if filtereddf.empty:
                 continue
-            sumDur = filtereddf.agg({GOOGLE.Duration: sum})
-            begintime = filtereddf.agg({GOOGLE.BeginTime: min})
-            endtime = filtereddf.agg({GOOGLE.EndTime: max})
-            filtereddf = self._dropColumns(filtereddf, [GOOGLE.Duration,
-                                                        GOOGLE.BeginTime,
-                                                        GOOGLE.EndTime])
-            filtereddf = self._addColumn(filtereddf,
-                                         GOOGLE.Duration,
-                                         sumDur)
-            filtereddf = self._addColumn(filtereddf,
-                                         GOOGLE.BeginTime,
-                                         begintime)
-            filtereddf = self._addColumn(filtereddf,
-                                         GOOGLE.EndTime,
-                                         endtime)
+            filtereddf = self.aggrateDuration(filtereddf)
             newDf = newDf.append(filtereddf)
         return newDf
+
+    def aggrateDuration(self, filtereddf):
+        sumDur = filtereddf.agg({GOOGLE.Duration: sum})
+        begintime = filtereddf.agg({GOOGLE.BeginTime: min})
+        endtime = filtereddf.agg({GOOGLE.EndTime: max})
+        filtereddf = self._drop_columns(filtereddf, [GOOGLE.Duration,
+                                                     GOOGLE.BeginTime,
+                                                     GOOGLE.EndTime])
+        filtereddf = self._add_column(filtereddf,
+                                      GOOGLE.Duration,
+                                      sumDur)
+        filtereddf = self._add_column(filtereddf,
+                                      GOOGLE.BeginTime,
+                                      begintime)
+        filtereddf = self._add_column(filtereddf,
+                                      GOOGLE.EndTime,
+                                      endtime)
+        return filtereddf

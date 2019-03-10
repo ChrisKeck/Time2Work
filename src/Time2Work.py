@@ -11,7 +11,6 @@ from config import Config
 
 class Time2Work:
 
-
     def __init__(self, config: Config, basedir: str):
         self.config = config
         self.basedir = basedir
@@ -33,13 +32,13 @@ class Time2Work:
     def createOutputFilePath(self, config: Config, basedir, item):
         filename = "{0}_{1}.{2}".format(config.fileprefix[item],
                                         config.id,
-                                        config.fileExtension)
+                                        config.file_extension)
         path = os.path.join(basedir, filename)
         return path
 
     def createWorkDict(self, config, basedir):
         work_dict = dict()
-        for item in config.sectionPlaces:
+        for item in config.section_places:
             fins = config.finalizer[item]
             finList = self.createSpecificBuilders(fins)
             path = self.createOutputFilePath(config, basedir, item)

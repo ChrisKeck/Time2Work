@@ -51,7 +51,7 @@ class ColumnsWorker(object):
             values = ColumnsWorker.__fillList(total_rows, tempvalues)
         elif isinstance(value, ndarray):
             values = ColumnsWorker.__fillList(total_rows, value)
-        elif isinstance(value, Iterable):
+        elif isinstance(value, Iterable) and not isinstance(value, str):
             values = ColumnsWorker.__fillList(total_rows, list(value))
         else:
             for dummy in range(0, total_rows):

@@ -9,35 +9,32 @@ from flask import logging
 
 
 class Config(object):
-    """
-    classdocs
-    """
 
     def __init__(self, file: str):
-        '''
+        """
         Constructor
-        '''
+        """
         if file is None:
             return
-        file = os.path.abspath(file)
         self.config: ConfigParser = ConfigParser()
         success = self.config.read(file, encoding="utf-8")
+        dir = os.path.dirname(file)
         if file not in success:
             raise FileNotFoundError(file + " nicht gefunden!")
-        self.__workplaces = self.__getValues("Main", "workplaces")
-        file = self.config.get("Main", "auth", fallback=None)
+        self.__workplaces = self.__get_values("Main", "workplaces")
+        file = dir + "/" + self.config.get("Main", "auth", fallback=None)
         if not file:
             raise FileNotFoundError(file + " nicht gefunden!")
         with open(file, encoding="utf-8") as f:
             self.__auth = f.read()
 
-    def __getValues(self, key, option) -> list:
+    def __get_values(self, key, option) -> list:
         return self.config.get(key, option, fallback="").split(self.delimiter)
 
-    def __getDict(self, option: str) -> dict:
+    def __get_dict(self, option: str) -> dict:
         result = dict()
         for item in self.__workplaces:
-            values = self.__getValues(item, option)
+            values = self.__get_values(item, option)
             if len(values) > 0:
                 result.update({item: values})
         return result
@@ -48,10 +45,10 @@ class Config(object):
 
     @property
     def places(self) -> dict:
-        return self.__getDict("places")
+        return self.__get_dict("places")
 
     @property
-    def fileExtension(self):
+    def file_extension(self):
         return "xlsx"
 
     @property
@@ -59,16 +56,16 @@ class Config(object):
         return "|"
 
     @property
-    def sectionPlaces(self) -> Iterable:
+    def section_places(self) -> Iterable:
         return self.__workplaces
 
     @property
     def fileprefix(self) -> dict:
-        return self.__getDict("fileprefix")
+        return self.__get_dict("fileprefix")
 
     @property
     def finalizer(self) -> dict:
-        return self.__getDict("finalizer")
+        return self.__get_dict("finalizer")
 
     @property
     def id(self) -> str:

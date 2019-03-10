@@ -3,10 +3,11 @@
 import unittest
 from datetime import datetime, time
 
+from pandas.core.frame import DataFrame
+
 from Env.TimeConstants import BA
 from Framing.Specifics import BAFormatFinalizer
 from config import LOGGER
-from pandas.core.frame import DataFrame
 
 
 class BAFormatFinalizerTest(unittest.TestCase):
@@ -25,25 +26,25 @@ class BAFormatFinalizerTest(unittest.TestCase):
 
     def testName(self):
         builder = BAFormatFinalizer()
-        df = builder.buildFrame(self.df)
+        df = builder.build_frame(self.df)
         LOGGER.info(df)
         assert df.get_value(0, BA.Duration) == "01:00"
 
     def testName2(self):
         builder = BAFormatFinalizer()
-        df = builder.buildFrame(self.df)
+        df = builder.build_frame(self.df)
         LOGGER.info(df)
         assert df.get_value(0, BA.Pause) == "05:15"
 
     def testName3(self):
         builder = BAFormatFinalizer()
-        df = builder.buildFrame(self.df)
+        df = builder.build_frame(self.df)
         LOGGER.info(df)
         assert df.get_value(0, BA.BuildDate) == "01.01.2000"
 
     def testName4(self):
         builder = BAFormatFinalizer()
-        df = builder.buildFrame(self.df)
+        df = builder.build_frame(self.df)
         LOGGER.info(df)
         assert df.get_value(0, BA.BeginTime) == "12:15"
 

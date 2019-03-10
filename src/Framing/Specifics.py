@@ -2,10 +2,11 @@
 # -*- coding: utf-8 -*-
 from abc import abstractmethod
 
+from pandas.core.frame import DataFrame
+
 from Env.TimeConstants import BA, Constants, GOOGLE, ISO
 from Env.Utils import ColumnsWorker, TimesFormatter
 from Framing.Common import FrameBuilder
-from pandas.core.frame import DataFrame
 
 
 class _FrameFinalizer(FrameBuilder):
@@ -15,9 +16,9 @@ class _FrameFinalizer(FrameBuilder):
         super(_FrameFinalizer, self).__init__()
         self.builder = builder
 
-    def _build_Data(self, df: DataFrame) -> DataFrame:
+    def _build_data(self, df: DataFrame) -> DataFrame:
         if self.builder:
-            df = self.builder.buildFrame(df)
+            df = self.builder.build_frame(df)
         return self._cleanFrame(df)
 
     @abstractmethod
@@ -38,7 +39,7 @@ class _ColumnsBuilder(FrameBuilder):
         self.otherInstance = GOOGLE
 
     def _addConstantColumns(self, df: DataFrame, columns) -> DataFrame:
-        df = self._addColumns(df, columns)
+        df = self._add_columns(df, columns)
         return df
 
     def _renameExistingColumns(self, df: DataFrame,
@@ -49,14 +50,14 @@ class _ColumnsBuilder(FrameBuilder):
                otherInstance.EndTime: instance.EndTime,
                otherInstance.Duration: instance.Duration,
                otherInstance.Pause: instance.Pause}
-        df = self._renameColumns(df, col)
+        df = self._rename_columns(df, col)
         return df
 
     def _removeOtherColumns(self, df: DataFrame, instance) -> DataFrame:
         df = ColumnsWorker.removeOtherColumns(instance, df)
         return df
 
-    def _build_Data(self, df: DataFrame) -> DataFrame:
+    def _build_data(self, df: DataFrame) -> DataFrame:
         df = self._addConstantColumns(df, self.instance)
         df = self._renameExistingColumns(df, self.instance, self.otherInstance)
         df.reindex()
@@ -94,10 +95,10 @@ class _FormatFinalizer(_FrameFinalizer):
 
     def __applyformat(self, df, strfunc, name):
         tempname = self._getTempName(name)
-        df = self._addColumn(df, tempname)
+        df = self._add_column(df, tempname)
         df = df.apply(lambda args: strfunc(args, name, tempname),
                       axis=1, result_type="expand")
-        df = self._renameColumns(df, {tempname: name})
+        df = self._rename_columns(df, {tempname: name})
         return df
 
     def _cleanFrame(self, df: DataFrame) -> DataFrame:
@@ -173,7 +174,7 @@ class _DuplicatesRemoveBuilder(FrameBuilder):
         super(_DuplicatesRemoveBuilder, self).__init__()
         self.instance = instance
 
-    def _build_Data(self, df: DataFrame) -> DataFrame:
+    def _build_data(self, df: DataFrame) -> DataFrame:
         instCols = ColumnsWorker.collectColumnsFromInstance(
                 self.instance)
         cols = self.__collectColumnsForUnique(

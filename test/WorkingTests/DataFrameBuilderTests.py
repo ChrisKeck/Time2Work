@@ -5,19 +5,19 @@ import unittest
 from Working.FrameCollectors import FrameCollector
 
 
+def readFile():
+    with open("/home/kec/IdeaProjects/Time2Work/resources/history-2018-01-01.kml", "r", encoding="utf-8") as f:
+        url = f.read()
+    return url
+
+
 class DataFrameBuilderTest(unittest.TestCase):
 
-
     def setUp(self):
-        self.url = self.readFile()
+        self.url = readFile()
 
     def tearDown(self):
         pass
-
-    def readFile(self):
-        with open("./resources/history-2018-01-01.kml", "r", encoding="utf-8") as f:
-            url = f.read()
-        return url
 
     def test_wenn_nicht_(self):
         collector = FrameCollector()

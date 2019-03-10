@@ -1,1 +1,191 @@
-<?xml version="1.0" encoding="UTF-8"?><kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2"><Document><name> Location history from 2018-01-01 to 2018-01-01 </name><open>1</open><description></description><StyleMap id="multiTrack"><Pair><key>normal</key><styleUrl>#multiTrack_n</styleUrl></Pair><Pair><key>highlight</key><styleUrl>#multiTrack_h</styleUrl></Pair></StyleMap><Style id="multiTrack_n"><IconStyle><Icon><href>https://earth.google.com/images/kml-icons/track-directional/track-0.png</href></Icon></IconStyle><LineStyle><color>99ffac59</color><width>6</width></LineStyle></Style><Style id="multiTrack_h"><IconStyle><scale>1.2</scale><Icon><href>https://earth.google.com/images/kml-icons/track-directional/track-0.png</href></Icon></IconStyle><LineStyle><color>99ffac59</color><width>8</width></LineStyle></Style><Placemark><name>Zuhause</name><address>Teststraße 7, 7777 Teststadt</address><ExtendedData><Data name="Email"><value>testvorname@gmail.com</value></Data><Data name="Category"><value></value></Data><Data name="Distance"><value>0</value></Data></ExtendedData><description>  from 2017-12-31T15:54:55.086Z to 2018-01-01T15:57:01.000Z. Distance 0m </description><Point><coordinates>11.2488,49.249449999999996,0</coordinates></Point><TimeSpan><begin>2017-12-31T15:54:55.086Z</begin><end>2018-01-01T15:57:01.000Z</end></TimeSpan></Placemark><Placemark><name>Driving</name><address></address><ExtendedData><Data name="Email"><value>test@gmail.com</value></Data><Data name="Category"><value>Driving</value></Data><Data name="Distance"><value>1747</value></Data></ExtendedData><description> Driving from 2018-01-01T15:57:01.000Z to 2018-01-01T16:05:46.000Z. Distance 1747m </description><LineString><altitudeMode>clampToGround</altitudeMode><extrude>1</extrude><tesselate>1</tesselate><coordinates>11.2488,49.249449999999996,0 11.2488,49.249449999999996,0 11.248864,49.2503456,0 11.247943,49.2510938,0 11.2479812,49.2511841,0 11.2479823,49.251181,0 11.2479824,49.2511808,0 11.2457257,49.2525594,0 11.2452655,49.2525086,0 11.2427057,49.2518147,0 11.2420068,49.2529041,0 11.2445712,49.2537196,0 11.2446813,49.2537949,0 11.2444498,49.253778,0 11.2445344,49.2538329,0 11.2445625,49.2537261,0 11.2505169,49.258489,0 11.2505169,49.258489,0 </coordinates></LineString><TimeSpan><begin>2018-01-01T15:57:01.000Z</begin><end>2018-01-01T16:05:46.000Z</end></TimeSpan></Placemark><Placemark><name>Testnsme</name><address>Gesetzte Markierung</address><ExtendedData><Data name="Email"><value>test@gmail.com</value></Data><Data name="Category"><value></value></Data><Data name="Distance"><value>0</value></Data></ExtendedData><description>  from 2018-01-01T16:05:46.000Z to 2018-01-01T17:04:04.000Z. Distance 0m </description><Point><coordinates>12.2505169,50.258489,0</coordinates></Point><TimeSpan><begin>2018-01-01T16:05:46.000Z</begin><end>2018-01-01T17:04:04.000Z</end></TimeSpan></Placemark><Placemark><name>Driving</name><address></address><ExtendedData><Data name="Email"><value>test@gmail.com</value></Data><Data name="Category"><value>Driving</value></Data><Data name="Distance"><value>2234</value></Data></ExtendedData><description> Driving from 2018-01-01T17:04:04.797Z to 2018-01-01T17:09:21.513Z. Distance 2234m </description><LineString><altitudeMode>clampToGround</altitudeMode><extrude>1</extrude><tesselate>1</tesselate><coordinates>11.2505169,49.258489,0 11.2485312,49.2584119,0 11.2498795,49.2566534,0 11.2507984,49.2546165,0 11.2439381,49.2539278,0 11.2421164,49.2521742,0 11.2401999,49.2508016,0 11.2432264,49.2503042,0 11.2459869,49.2498465,0 11.2493922,49.2492253,0 11.2493922,49.2492253,0 </coordinates></LineString><TimeSpan><begin>2018-01-01T17:04:04.797Z</begin><end>2018-01-01T17:09:21.513Z</end></TimeSpan></Placemark><Placemark><name>Moving</name><address></address><ExtendedData><Data name="Email"><value>test@gmail.com</value></Data><Data name="Category"><value>Moving</value></Data><Data name="Distance"><value>123</value></Data></ExtendedData><description> Moving from 2018-01-01T17:09:21.513Z to 2018-01-02T10:13:58.438Z. Distance 123m </description><LineString><altitudeMode>clampToGround</altitudeMode><extrude>1</extrude><tesselate>1</tesselate><coordinates>11.2493922,49.2492253,0 11.2493922,49.2492253,0 11.2489255,49.249341,0 11.248714,49.2494077,0 11.2488391,49.2494697,0 11.2487437,49.249455,0 11.2486935,49.249408,0 11.2486936,49.2494083,0 11.2487099,49.2494141,0 11.2486936,49.2494087,0 11.2486931,49.2494087,0 11.2486935,49.2494083,0 11.2486936,49.2494077,0 11.2486935,49.2494084,0 11.2486934,49.2494084,0 11.2486934,49.249408,0 11.2486933,49.2494082,0 11.2486941,49.2494082,0 11.2486933,49.2494088,0 11.2486941,49.2494083,0 11.2486936,49.2494081,0 11.2486937,49.2494085,0 11.2486913,49.2494098,0 11.248693,49.2494088,0 11.2487091,49.2494137,0 11.2486937,49.2494087,0 11.2486936,49.2494088,0 11.2487093,49.2494141,0 11.2487094,49.249413,0 11.2487093,49.249414,0 11.2487093,49.2494141,0 11.2487093,49.2494139,0 11.2487093,49.249414,0 11.2487094,49.2494141,0 11.2487094,49.2494142,0 11.2486932,49.2494087,0 11.248693,49.2494085,0 11.2487095,49.2494143,0 11.2486934,49.2494082,0 11.2487095,49.2494144,0 11.248693,49.2494089,0 11.2486938,49.2494087,0 11.2486937,49.2494087,0 11.2486939,49.2494085,0 11.2486932,49.2494082,0 11.2486929,49.2494089,0 11.2486931,49.2494079,0 11.2486931,49.2494081,0 11.2486932,49.2494087,0 11.2486868,49.2493942,0 11.2487721,49.2494063,0 11.2487091,49.2494138,0 11.2486934,49.2494088,0 11.2486938,49.2494085,0 11.2486939,49.2494087,0 11.2486934,49.2494088,0 11.2486937,49.2494084,0 11.2486946,49.2494099,0 11.2486937,49.2494079,0 11.2486936,49.249408,0 11.2486938,49.2494078,0 11.248694,49.2494073,0 11.2486939,49.2494078,0 11.2487087,49.2494134,0 11.2486939,49.2494085,0 11.2486266,49.2494085,0 11.2487095,49.2494144,0 11.2486933,49.2494087,0 11.248709,49.2494137,0 </coordinates></LineString><TimeSpan><begin>2018-01-01T17:09:21.513Z</begin><end>2018-01-02T10:13:58.438Z</end></TimeSpan></Placemark></Document></kml>
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+    <Document>
+        <name>Location history from 2018-01-01 to 2018-01-01</name>
+        <open>1</open>
+        <description></description>
+        <StyleMap id="multiTrack">
+            <Pair>
+                <key>normal</key>
+                <styleUrl>#multiTrack_n</styleUrl>
+            </Pair>
+            <Pair>
+                <key>highlight</key>
+                <styleUrl>#multiTrack_h</styleUrl>
+            </Pair>
+        </StyleMap>
+        <Style id="multiTrack_n">
+            <IconStyle>
+                <Icon>
+                    <href>https://earth.google.com/images/kml-icons/track-directional/track-0.png</href>
+                </Icon>
+            </IconStyle>
+            <LineStyle>
+                <color>99ffac59</color>
+                <width>6</width>
+            </LineStyle>
+        </Style>
+        <Style id="multiTrack_h">
+            <IconStyle>
+                <scale>1.2</scale>
+                <Icon>
+                    <href>https://earth.google.com/images/kml-icons/track-directional/track-0.png</href>
+                </Icon>
+            </IconStyle>
+            <LineStyle>
+                <color>99ffac59</color>
+                <width>8</width>
+            </LineStyle>
+        </Style>
+        <Placemark>
+            <name>Zuhause</name>
+            <address>Teststraße 7, 7777 Teststadt</address>
+            <ExtendedData>
+                <Data name="Email">
+                    <value>testvorname@gmail.com</value>
+                </Data>
+                <Data name="Category">
+                    <value></value>
+                </Data>
+                <Data name="Distance">
+                    <value>0</value>
+                </Data>
+            </ExtendedData>
+            <description>from 2017-12-31T15:54:55.086Z to 2018-01-01T15:57:01.000Z. Distance 0m</description>
+            <Point>
+                <coordinates>11.2488,49.249449999999996,0</coordinates>
+            </Point>
+            <TimeSpan>
+                <begin>2017-12-31T15:54:55.086Z</begin>
+                <end>2018-01-01T15:57:01.000Z</end>
+            </TimeSpan>
+        </Placemark>
+        <Placemark>
+            <name>Zuhause</name>
+            <address>Zuhause</address>
+            <ExtendedData>
+                <Data name="Email">
+                    <value>test@gmail.com</value>
+                </Data>
+                <Data name="Category">
+                    <value>Driving</value>
+                </Data>
+                <Data name="Distance">
+                    <value>1747</value>
+                </Data>
+            </ExtendedData>
+            <description>Driving from 2018-01-01T15:57:01.000Z to 2018-01-01T16:05:46.000Z. Distance 1747m</description>
+            <LineString>
+                <altitudeMode>clampToGround</altitudeMode>
+                <extrude>1</extrude>
+                <tesselate>1</tesselate>
+                <coordinates>11.2488,49.249449999999996,0 11.2488,49.249449999999996,0 11.248864,49.2503456,0
+                    11.247943,49.2510938,0 11.2479812,49.2511841,0 11.2479823,49.251181,0 11.2479824,49.2511808,0
+                    11.2457257,49.2525594,0 11.2452655,49.2525086,0 11.2427057,49.2518147,0 11.2420068,49.2529041,0
+                    11.2445712,49.2537196,0 11.2446813,49.2537949,0 11.2444498,49.253778,0 11.2445344,49.2538329,0
+                    11.2445625,49.2537261,0 11.2505169,49.258489,0 11.2505169,49.258489,0
+                </coordinates>
+            </LineString>
+            <TimeSpan>
+                <begin>2018-01-01T15:57:01.000Z</begin>
+                <end>2018-01-01T16:05:46.000Z</end>
+            </TimeSpan>
+        </Placemark>
+        <Placemark>
+            <name>Arbeit</name>
+            <address>Arbeit</address>
+            <ExtendedData>
+                <Data name="Email">
+                    <value>test@gmail.com</value>
+                </Data>
+                <Data name="Category">
+                    <value></value>
+                </Data>
+                <Data name="Distance">
+                    <value>0</value>
+                </Data>
+            </ExtendedData>
+            <description>from 2018-01-01T16:05:46.000Z to 2018-01-01T17:04:04.000Z. Distance 0m</description>
+            <Point>
+                <coordinates>12.2505169,50.258489,0</coordinates>
+            </Point>
+            <TimeSpan>
+                <begin>2018-01-01T16:05:46.000Z</begin>
+                <end>2018-01-01T17:04:04.000Z</end>
+            </TimeSpan>
+        </Placemark>
+        <Placemark>
+            <name>Arbeit</name>
+            <address>Arbeit</address>
+            <ExtendedData>
+                <Data name="Email">
+                    <value>test@gmail.com</value>
+                </Data>
+                <Data name="Category">
+                    <value>Driving</value>
+                </Data>
+                <Data name="Distance">
+                    <value>2234</value>
+                </Data>
+            </ExtendedData>
+            <description>Driving from 2018-01-01T17:04:04.797Z to 2018-01-01T17:09:21.513Z. Distance 2234m</description>
+            <LineString>
+                <altitudeMode>clampToGround</altitudeMode>
+                <extrude>1</extrude>
+                <tesselate>1</tesselate>
+                <coordinates>11.2505169,49.258489,0 11.2485312,49.2584119,0 11.2498795,49.2566534,0
+                    11.2507984,49.2546165,0 11.2439381,49.2539278,0 11.2421164,49.2521742,0 11.2401999,49.2508016,0
+                    11.2432264,49.2503042,0 11.2459869,49.2498465,0 11.2493922,49.2492253,0 11.2493922,49.2492253,0
+                </coordinates>
+            </LineString>
+            <TimeSpan>
+                <begin>2018-01-01T17:04:04.797Z</begin>
+                <end>2018-01-01T17:09:21.513Z</end>
+            </TimeSpan>
+        </Placemark>
+        <Placemark>
+            <name>Arbeit</name>
+            <address>Arbeit</address>
+            <ExtendedData>
+                <Data name="Email">
+                    <value>test@gmail.com</value>
+                </Data>
+                <Data name="Category">
+                    <value>Moving</value>
+                </Data>
+                <Data name="Distance">
+                    <value>123</value>
+                </Data>
+            </ExtendedData>
+            <description>Moving from 2018-01-01T17:09:21.513Z to 2018-01-02T10:13:58.438Z. Distance 123m</description>
+            <LineString>
+                <altitudeMode>clampToGround</altitudeMode>
+                <extrude>1</extrude>
+                <tesselate>1</tesselate>
+                <coordinates>11.2493922,49.2492253,0 11.2493922,49.2492253,0 11.2489255,49.249341,0
+                    11.248714,49.2494077,0 11.2488391,49.2494697,0 11.2487437,49.249455,0 11.2486935,49.249408,0
+                    11.2486936,49.2494083,0 11.2487099,49.2494141,0 11.2486936,49.2494087,0 11.2486931,49.2494087,0
+                    11.2486935,49.2494083,0 11.2486936,49.2494077,0 11.2486935,49.2494084,0 11.2486934,49.2494084,0
+                    11.2486934,49.249408,0 11.2486933,49.2494082,0 11.2486941,49.2494082,0 11.2486933,49.2494088,0
+                    11.2486941,49.2494083,0 11.2486936,49.2494081,0 11.2486937,49.2494085,0 11.2486913,49.2494098,0
+                    11.248693,49.2494088,0 11.2487091,49.2494137,0 11.2486937,49.2494087,0 11.2486936,49.2494088,0
+                    11.2487093,49.2494141,0 11.2487094,49.249413,0 11.2487093,49.249414,0 11.2487093,49.2494141,0
+                    11.2487093,49.2494139,0 11.2487093,49.249414,0 11.2487094,49.2494141,0 11.2487094,49.2494142,0
+                    11.2486932,49.2494087,0 11.248693,49.2494085,0 11.2487095,49.2494143,0 11.2486934,49.2494082,0
+                    11.2487095,49.2494144,0 11.248693,49.2494089,0 11.2486938,49.2494087,0 11.2486937,49.2494087,0
+                    11.2486939,49.2494085,0 11.2486932,49.2494082,0 11.2486929,49.2494089,0 11.2486931,49.2494079,0
+                    11.2486931,49.2494081,0 11.2486932,49.2494087,0 11.2486868,49.2493942,0 11.2487721,49.2494063,0
+                    11.2487091,49.2494138,0 11.2486934,49.2494088,0 11.2486938,49.2494085,0 11.2486939,49.2494087,0
+                    11.2486934,49.2494088,0 11.2486937,49.2494084,0 11.2486946,49.2494099,0 11.2486937,49.2494079,0
+                    11.2486936,49.249408,0 11.2486938,49.2494078,0 11.248694,49.2494073,0 11.2486939,49.2494078,0
+                    11.2487087,49.2494134,0 11.2486939,49.2494085,0 11.2486266,49.2494085,0 11.2487095,49.2494144,0
+                    11.2486933,49.2494087,0 11.248709,49.2494137,0
+                </coordinates>
+            </LineString>
+            <TimeSpan>
+                <begin>2018-01-01T17:09:21.513Z</begin>
+                <end>2018-01-02T10:13:58.438Z</end>
+            </TimeSpan>
+        </Placemark>
+    </Document>
+</kml>

@@ -27,7 +27,7 @@ setup(
         license="LICENSE",
         description="Leistungsnachweise individuell erstellen lassen anhand von deinem Bewegungsmuster",
 
-        long_description=open("README.txt").read(),
+        long_description=open("../README.txt").read(),
 
         # Dependent packages (distributions)
         install_requires=[

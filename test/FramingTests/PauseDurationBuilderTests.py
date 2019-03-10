@@ -3,9 +3,10 @@
 import unittest
 from datetime import time
 
+from pandas.core.frame import DataFrame
+
 from Env.TimeConstants import GOOGLE
 from Framing.Custom import PauseDurationBuilder
-from pandas.core.frame import DataFrame
 
 
 class PauseDurationBuilderTest(unittest.TestCase):
@@ -22,7 +23,7 @@ class PauseDurationBuilderTest(unittest.TestCase):
 
     def testName(self):
         builder = PauseDurationBuilder()
-        df = builder.buildFrame(self.df)
+        df = builder.build_frame(self.df)
         assert df[GOOGLE.Pause][0] == 120
 
 

@@ -15,13 +15,11 @@ from pandas.core.frame import DataFrame
 
 class BaseReaderMock(TimeReader):
 
-
     def _readTime(self, dummy: datetime) -> str:
         return self.cookies
 
 
 class TransformerMock(CommandToExcelTransformer):
-
 
     def __init__(self, content: str, workplaces: dict):
         super(TransformerMock, self).__init__(content, workplaces)
@@ -32,7 +30,6 @@ class TransformerMock(CommandToExcelTransformer):
 
 
 class NoBuildingTransformerMock(TransformerMock):
-
 
     def __init__(self, content: str, workplaces: dict):
         super(NoBuildingTransformerMock, self).__init__(content, workplaces)
@@ -47,7 +44,6 @@ class NoBuildingTransformerMock(TransformerMock):
 
 class TransformerTimePoiMock(TransformerMock):
 
-
     def _createBuilder(self, dat: datetime) -> FrameBuilder:
         return BuildContainer([GOOGLEFrameBuilder(),
                                IndexBuilder(dat),
@@ -59,14 +55,12 @@ class TransformerTimePoiMock(TransformerMock):
 
 class ConfigMock(Config):
 
-
     @property
-    def sectionPlaces(self) -> Iterable:
-        return Config.sectionPlaces
+    def section_places(self) -> Iterable:
+        return Config().section_places
 
 
 class PublisherMock(FramePublisher):
-
 
     def integrate(self, other: DataFrame):
         FramePublisher.integrate(self, other)

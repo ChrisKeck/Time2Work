@@ -3,9 +3,10 @@
 import unittest
 from datetime import datetime
 
+from pandas.core.frame import DataFrame
+
 from Env.TimeConstants import GOOGLE
 from Framing.Grouping import DurationGroupBuilder
-from pandas.core.frame import DataFrame
 
 
 class Test(unittest.TestCase):
@@ -49,13 +50,13 @@ class Test(unittest.TestCase):
     def testName(self):
         df = self.appendRows(self.df)
         builder = self.createDurationBuilderGroup(["ISO"])
-        df = builder.buildFrame(df)
+        df = builder.build_frame(df)
         dur = df[GOOGLE.Duration].get_values()[0]
         assert dur == 400
 
     def testName2(self):
         builder = self.createDurationBuilderGroup(["ISO"])
-        df = builder.buildFrame(self.df)
+        df = builder.build_frame(self.df)
         dur = df[GOOGLE.Duration].get_values()[0]
         assert dur == 250
 

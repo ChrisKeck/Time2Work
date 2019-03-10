@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import sys
-from _ctypes import FormatError
+
 from datetime import datetime
 from getopt import GetoptError, getopt
 
@@ -9,12 +9,12 @@ from Time2Work import Time2Work
 from config import Config
 
 
-def helpOutput():
+def help_output():
     print("Noch nicht verfübar")
     sys.exit()
 
 
-def createConfig(setting_file):
+def create_config(setting_file):
     try:
         return Config(setting_file)
     except FileNotFoundError:
@@ -35,7 +35,7 @@ def main(argv):
                              "from=", "till="])
         print("Options: {0}\nArgs: {1}".format(opts, args))
     except GetoptError:
-        helpOutput()
+        help_output()
         raise
     for opt, arg in opts:
         if opt in ("-h", "--help"):
@@ -51,7 +51,7 @@ def main(argv):
         elif opt in ("-t", "--till"):
             bis = convertDate(arg)
     Config.DEBUG = debug
-    config = createConfig(setting_file)
+    config = create_config(setting_file)
     worker = Time2Work(config, output)
     worker.start(von, bis)
 
@@ -60,7 +60,7 @@ def convertDate(arg):
     try:
         res = datetime.strptime(arg, "%d.%m.%Y")
         return res
-    except FormatError:
+    except:
         print("Datum in folgenden Format angeben: \"%d.%m.%Y\"\nz.B.: 1.1.2000")
         raise
 
