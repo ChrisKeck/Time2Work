@@ -33,19 +33,15 @@ class GoogleConstants(Constants):
 
     @property
     def Address(self):
-        return "Address"
-
-    @property
-    def TimeSpan(self):
-        return "TimeSpan"
+        return "address"
 
     @property
     def EndDate(self):
-        return "EndDate"
+        return "end"
 
     @property
     def BeginDate(self):
-        return "BeginDate"
+        return "begin"
 
     @property
     def Category(self):
@@ -53,7 +49,7 @@ class GoogleConstants(Constants):
 
     @property
     def Description(self):
-        return "Description"
+        return "description"
 
     @property
     def Distance(self):
@@ -61,7 +57,7 @@ class GoogleConstants(Constants):
 
     @property
     def Name(self):
-        return "Name"
+        return "name"
 
     @property
     def Workplace(self):

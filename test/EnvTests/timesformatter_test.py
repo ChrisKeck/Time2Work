@@ -3,9 +3,10 @@
 import unittest
 from datetime import datetime, time
 
+from dateutil import tz
+
 from Env.Utils import TimesFormatter
 from config import LOGGER
-from dateutil import tz
 
 
 class TimesFormatterTest(unittest.TestCase):

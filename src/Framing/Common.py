@@ -3,7 +3,6 @@
 from abc import abstractmethod
 from datetime import date, datetime, timedelta
 
-import pandas
 from pandas.core.frame import DataFrame
 
 from Env.TimeConstants import GOOGLE
@@ -101,7 +100,7 @@ class IndexBuilder(FrameBuilder):
         self.build_date = datum
 
     def _build_data(self, df: DataFrame) -> DataFrame:
-        df = self._add_column(df, GOOGLE.Index, df[GOOGLE.TimeSpan])
+        df = self._add_column(df, GOOGLE.Index, df[GOOGLE.Description])
         df = self._add_column(df, GOOGLE.BuildDate, self.build_date)
         return df
 
@@ -114,11 +113,6 @@ class TimeBuilder(FrameBuilder):
         self.hours_for_tz = hours_for_tz
 
     def _build_data(self, df: DataFrame) -> DataFrame:
-        series = df[GOOGLE.TimeSpan].apply(pandas.Series)
-        times = series.rename(columns={0: GOOGLE.BeginDate, 1: GOOGLE.EndDate})
-        df = self._add_column(df, GOOGLE.BeginDate, times[GOOGLE.BeginDate])
-        end = times.get(GOOGLE.EndDate, times.get(GOOGLE.BeginDate))
-        df = self._add_column(df, GOOGLE.EndDate, end)
 
         def convert(row):
             return self.__converttime(row, self.hours_for_tz)

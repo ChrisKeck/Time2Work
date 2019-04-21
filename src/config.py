@@ -18,15 +18,21 @@ class Config(object):
             return
         self.config: ConfigParser = ConfigParser()
         success = self.config.read(file, encoding="utf-8")
-        dir = os.path.dirname(file)
-        if file not in success:
-            raise FileNotFoundError(file + " nicht gefunden!")
+
+        self.__check_file_exists(file,success)
+
         self.__workplaces = self.__get_values("Main", "workplaces")
-        file = dir + "/" + self.config.get("Main", "auth", fallback=None)
-        if not file:
-            raise FileNotFoundError(file + " nicht gefunden!")
+        dir_path = os.path.dirname(file)
+        file = dir_path + "/" + self.config.get("Main", "auth", fallback=None)
+        self.__check_file_exists(file, [file])
         with open(file, encoding="utf-8") as f:
             self.__auth = f.read()
+
+    def __check_file_exists(self, file, success:list):
+        if not file in success:
+            with open(file, "w+", encoding="utf-8"):
+                pass
+            raise FileNotFoundError(file + " nicht gefunden!")
 
     def __get_values(self, key, option) -> list:
         return self.config.get(key, option, fallback="").split(self.delimiter)

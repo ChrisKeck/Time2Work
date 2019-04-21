@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import sys
-
 from datetime import datetime
 from getopt import GetoptError, getopt
 
@@ -18,6 +17,7 @@ def create_config(setting_file):
     try:
         return Config(setting_file)
     except FileNotFoundError:
+
         raise
 
 

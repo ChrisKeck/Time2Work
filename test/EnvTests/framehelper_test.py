@@ -3,9 +3,10 @@
 
 import unittest
 
+from pandas.core.frame import DataFrame
+
 from Env.TimeConstants import GOOGLE
 from Env.Utils import ColumnsWorker
-from pandas.core.frame import DataFrame
 
 
 class Test(unittest.TestCase):
@@ -17,12 +18,12 @@ class Test(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def testWennSpaltenHinzugefuegtWurden_DannSindSieImFrameEnthalten(self):
+    def test_WennSpaltenHinzugefuegtWurden_DannSindSieImFrameEnthalten(self):
         df = DataFrame()
         df = ColumnsWorker.addColumns(GOOGLE, df)
         assert len(df.columns) > 0
 
-    def testName(self):
+    def test_Name(self):
         df = DataFrame({"Test1": [1, 2], "Test2": ["1", "2"]})
         df = ColumnsWorker.addColumn(df, "Test3", "value")
         test3Values = df["Test3"].get_values()
@@ -31,7 +32,7 @@ class Test(unittest.TestCase):
         print(test3Values)
         assert isValid
 
-    def testName3(self):
+    def test_Name3(self):
         df = DataFrame({"Test1": [1, 2], "Test2": ["1", "2"]})
         df = ColumnsWorker.addColumn(df, "Test3", df["Test2"])
         test3Values = df["Test3"].get_values()
@@ -40,21 +41,21 @@ class Test(unittest.TestCase):
         print(test3Values)
         assert isValid
 
-    def testName4(self):
+    def test_Name4(self):
         df = DataFrame({"Test1": [1, 2], "Test2": [
             "1", "2"], "Test3": ["1", "2"]})
         df = ColumnsWorker.dropColumns(df, ["Test2"])
         isValid = "Test1" in df and "Test3" in df and "Test2" not in df
         assert isValid
 
-    def testName5(self):
+    def test_Name5(self):
         df = DataFrame({"Test1": [1, 2], "Test2": [
             "1", "2"], "Test3": ["1", "2"]})
         lst = ColumnsWorker.getColumnsInFrame(df, ["Test2"])
         isValid = "Test2" in lst and len(lst) == 1
         assert isValid
 
-    def testName6(self):
+    def test_Name6(self):
         df = DataFrame({"Test1": [1, 2], "Test2": [
             "1", "2"], "Test3": ["1", "2"]})
         df = ColumnsWorker.reassignColumns(df, ["Test3", "Test2"])
@@ -62,7 +63,7 @@ class Test(unittest.TestCase):
         isValid = "Test3" == df.columns[0] and "Test2" == df.columns[1] and "Test1" not in df
         assert isValid
 
-    def testName7(self):
+    def test_Name7(self):
         df = DataFrame({"Test1": [1, 2], "Test2": [
             "1", "2"], "Test3": ["1", "2"]})
         df = ColumnsWorker.renameColumns(df, {"Test3": "3Test"})
@@ -70,7 +71,7 @@ class Test(unittest.TestCase):
         isValid = "Test3" not in df and "3Test" in df and "Test1" in df and "Test2" in df
         assert isValid
 
-    def testName8(self):
+    def test_Name8(self):
         df = DataFrame({"Test1": [1, 2], "Test2": [
             "1", "2"], "Test3": ["1", "2"]})
         df = ColumnsWorker.renameColumns(df, {"Test3": "Test1"})

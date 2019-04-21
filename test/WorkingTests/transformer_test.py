@@ -9,11 +9,11 @@ from pandas.core.frame import DataFrame
 from Framing.Common import BuildContainer
 from Framing.Specifics import (BADuplicatesRemoveBuilder, BAFormatFinalizer, BAFrameBuilder, ISODuplicatesRemoveBuilder,
                                ISOFormatFinalizer,
-                               ISOFrameBuilder)
+                               ISOFrameBuilder, )
 from Mocks import NoBuildingTransformerMock, PublisherMock, TransformerTimePoiMock
 from config import Config
 
-root = os.path.expanduser("~/IdeaProjects/Time2Work")
+root = os.path.expanduser("~/PycharmProjects/Time2Work")
 class TransformerTest(unittest.TestCase):
 
 
@@ -45,12 +45,12 @@ class TransformerTest(unittest.TestCase):
 
         return transformer
 
-    # def test_WennTransformiertWurde_DannExistierenDieEntsprechendenDateien(self):
-    #     transformer = self.createTransformer()
-    #     transformer.transform(datetime(2018, 1, 1), datetime(
-    #             2018, 1, 1), self.createFinalizers())
-    #     assert os.path.exists(root+ "/target/ba_" + self.wid + ".xlsx")
-    #     assert os.path.exists(root+ "/target/iso_" + self.wid + ".xlsx")
+    def test_WennTransformiertWurde_DannExistierenDieEntsprechendenDateien(self):
+        transformer = self.createTransformer()
+        transformer.transform(datetime(2018, 1, 1), datetime(
+                2018, 1, 1), self.createFinalizers())
+        assert os.path.exists(root+ "/target/ba_" + self.wid + ".xlsx")
+        assert os.path.exists(root+ "/target/iso_" + self.wid + ".xlsx")
 
     def testWennOhneAenderungenDerDatenTransformiertWurde_DannExistierenDieEntsprechendeDatei(self):
         pathClean = {

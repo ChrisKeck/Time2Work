@@ -3,9 +3,10 @@
 from _collections_abc import Iterable
 
 import pandas as pd
-from bs4 import BeautifulSoup, NavigableString, ResultSet, BeautifulStoneSoup, Tag
-from config import LOGGER
+from bs4 import BeautifulSoup, ResultSet, BeautifulStoneSoup, Tag
 from pandas.core.frame import DataFrame
+
+from config import LOGGER
 
 
 class FrameCollector:
@@ -22,27 +23,27 @@ class FrameCollector:
     def __collect_places(place: ResultSet) -> dict:
         dic = {}
         for elem in place:
-            LOGGER.info(elem)
-            if elem.name != 'Point':
-                if isinstance(elem, (Tag)):
-                    FrameCollector.__collect_place(dic, elem)
+            if elem.name != 'Point' and elem.name != 'description' and elem.name != 'LineString' and isinstance(elem, (Tag)):
+                LOGGER.info('Der Tag mit den Namen "' + elem.name + '" hat den Wert "' + elem.text + '"')
+                FrameCollector.__collect_place(dic, elem)
 
         return dic
 
     @staticmethod
     def __collect_place(dic: dict, elem: Tag):
-        child = list(elem.children)
-        datas = elem.find_all('Data')
-
-        if len(child) == 1:
-            dic.update({elem.name.title(): ''.join(child)})
-        elif len(datas) > 1:
-            for data in datas:
-                dic.update({data.attrs['name']: data.text})
+        if elem.name=='ExtendedData':
+            for child in elem.contents:
+                if isinstance(child,Tag) and child.attrs['name'] == 'Category':
+                    text=child.text
+                    if child.text.strip()=='':
+                        text='Standing'
+                    dic[child.attrs['name']]=text
+        elif elem.name=='TimeSpan':
+            for child in elem.contents:
+                if isinstance(child, Tag):
+                    dic[child.name] = child.text
         else:
-            LOGGER.warn(child)
-            dic.update({elem.name: [d.text for d in child]})
-
+            dic[elem.name]=elem.text
         return dic
 
     def __process(self, beau_sou: BeautifulSoup) -> Iterable:
@@ -53,7 +54,7 @@ class FrameCollector:
         return places
 
     def __create_frame(self, text: str) -> DataFrame:
-        beau = BeautifulStoneSoup(text.replace("\n", "").replace(" ", ""))
+        beau = BeautifulStoneSoup(text)
         places = self.__process(beau)
         LOGGER.info(places)
         data = pd.DataFrame(places)

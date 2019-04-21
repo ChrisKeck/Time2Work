@@ -18,7 +18,7 @@ class Test(unittest.TestCase):
         pass
 
     def testWennFuenfTageAbefragtWerdenDannWerdenFuenfTageErmittelt(self):
-        with open("./resources/history-2018-01-01.kml", "r", encoding="utf-8") as f:
+        with open("/home/kec/PycharmProjects/Time2Work/resources/history-2018-01-01.kml", "r", encoding="utf-8") as f:
             url = f.read()
         timeline = TimelineReader(BaseReaderMock(url))
         actual = timeline.readTime(datetime(2017, 5, 3), datetime(2017, 5, 4))

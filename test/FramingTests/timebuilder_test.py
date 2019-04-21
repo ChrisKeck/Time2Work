@@ -17,8 +17,8 @@ class TimeBuilderTest(unittest.TestCase):
         return TimeBuilder(date, 0)
 
     def setUp(self):
-        self.df: DataFrame = DataFrame({GOOGLE.TimeSpan: [['2000-01-01T10:30:00.000Z',
-                                                           '2000-01-01T11:59:00.000Z']]})
+        self.df: DataFrame = DataFrame({GOOGLE.BeginDate: '2000-01-01T10:30:00.000Z',GOOGLE.EndDate:
+                                                           '2000-01-01T11:59:00.000Z'},[1,2])
 
     def tearDown(self):
         pass
@@ -39,10 +39,10 @@ class TimeBuilderTest(unittest.TestCase):
         builder = self.createBuilder(datetime(2000, 1, 1))
 
         df: DataFrame = builder.build_frame(self.df)
-
-        self.assertEqual(df.get_value(0, GOOGLE.BeginDate),
+        begin=df[GOOGLE.BeginDate]
+        self.assertEqual(begin.get_values()[0],
                          datetime(2000, 1, 1).date(), "")
-        self.assertEqual(df.get_value(0, GOOGLE.EndDate),
+        self.assertEqual(df[GOOGLE.EndDate].get_values()[0],
                          datetime(2000, 1, 1).date(), "")
 
     def testTimeBuildFrame(self):
@@ -51,9 +51,9 @@ class TimeBuilderTest(unittest.TestCase):
         df: DataFrame = builder.build_frame(self.df)
 
         LOGGER.debug(df.to_string())
-        self.assertEqual(df.get_value(0, GOOGLE.BeginTime),
+        self.assertEqual(df[GOOGLE.BeginTime].get_values()[0],
                          time(10, 30), "msg")
-        self.assertEqual(df.get_value(0, GOOGLE.EndTime), time(12), "")
+        self.assertEqual(df[GOOGLE.EndTime].get_values()[0], time(12), "")
 
     def testDurationBuildFrame(self):
         builder = self.createBuilder(datetime(2000, 1, 1))
@@ -61,7 +61,7 @@ class TimeBuilderTest(unittest.TestCase):
         df = builder.build_frame(self.df)
 
         LOGGER.debug(df.to_string())
-        self.assertEqual(df.get_value(0, GOOGLE.Duration), 90)
+        self.assertEqual(df[GOOGLE.Duration].get_values()[0], 90)
 
 
 if __name__ == "__main__":

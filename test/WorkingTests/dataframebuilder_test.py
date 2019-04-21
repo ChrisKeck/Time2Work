@@ -6,7 +6,7 @@ from Working.FrameCollectors import FrameCollector
 
 
 def readFile():
-    with open("/home/kec/IdeaProjects/Time2Work/resources/history-2018-01-01.kml", "r", encoding="utf-8") as f:
+    with open("/home/kec/PycharmProjects/Time2Work/resources/history-2018-01-01.kml", "r", encoding="utf-8") as f:
         url = f.read()
     return url
 
