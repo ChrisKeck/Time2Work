@@ -22,6 +22,9 @@ class TransformerTest(unittest.TestCase):
         with open(root + "/resources/history-2018-01-01.kml", "r", encoding="utf-8") as f:
             url = f.read()
         self.url = url
+        with open(root + "/resources/history-2018-01-01.kml", "r", encoding="utf-8") as f:
+            url2 = f.read()
+        self.url2 = url2
         self.wid = self.workplaces.timestamp + self.workplaces.id
 
     def tearDown(self):
@@ -40,15 +43,21 @@ class TransformerTest(unittest.TestCase):
             root + "/target/ori_" + self.wid + ".xlsx": BuildContainer([])}
         return pathClean
 
-    def createTransformer(self):
-        transformer = TransformerTimePoiMock(self.url, self.workplaces.places)
-
+    def createTransformer(self, url):
+        transformer = TransformerTimePoiMock(url, self.workplaces.places)
         return transformer
 
     def test_WennTransformiertWurde_DannExistierenDieEntsprechendenDateien(self):
-        transformer = self.createTransformer()
+        transformer = self.createTransformer(self.url)
         transformer.transform(datetime(2018, 1, 1), datetime(
                 2018, 1, 1), self.createFinalizers())
+        assert os.path.exists(root+ "/target/ba_" + self.wid + ".xlsx")
+        assert os.path.exists(root+ "/target/iso_" + self.wid + ".xlsx")
+
+    def test_WennTransformiertWurde_DannExistierenDieEntsprechendenDateien2(self):
+        transformer = self.createTransformer(self.url2)
+        transformer.transform(datetime(2018, 1, 2), datetime(
+                2018, 1, 2), self.createFinalizers())
         assert os.path.exists(root+ "/target/ba_" + self.wid + ".xlsx")
         assert os.path.exists(root+ "/target/iso_" + self.wid + ".xlsx")
 

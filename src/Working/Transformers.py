@@ -51,6 +51,7 @@ class Transformer(object):
                          ist!".format(elem))
             else:
                 df = df.append(other)
+        df = df.reindex()
         return df
 
     @staticmethod
