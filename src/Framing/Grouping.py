@@ -71,9 +71,9 @@ class DurationGroupBuilder(_GroupBuilder, ABC):
         return newDf
 
     def aggrateDuration(self, filtereddf):
-        sumDur = filtereddf.agg({GOOGLE.Duration: sum})
-        begintime = filtereddf.agg({GOOGLE.BeginTime: min})
-        endtime = filtereddf.agg({GOOGLE.EndTime: max})
+        sumDur =filtereddf[GOOGLE.Duration].agg({sum})['sum']
+        begintime = filtereddf[GOOGLE.BeginTime].agg({min})['min']
+        endtime = filtereddf[GOOGLE.EndTime].agg({max})['max']
         filtereddf = self._drop_columns(filtereddf, [GOOGLE.Duration,
                                                      GOOGLE.BeginTime,
                                                      GOOGLE.EndTime])

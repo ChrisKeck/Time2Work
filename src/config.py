@@ -59,7 +59,7 @@ class Config(object):
 
     @property
     def delimiter(self) -> str:
-        return "|"
+        return ";"
 
     @property
     def section_places(self) -> Iterable:
