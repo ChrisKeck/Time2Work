@@ -64,10 +64,13 @@ class DurationGroupBuilder(_GroupBuilder, ABC):
         for datum in selectedDates:
 
             filtereddf = self.__filterValues(df, datum)
-            if filtereddf.empty:
-                continue
-            filtereddf = self.aggrateDuration(filtereddf)
-            newDf = newDf.append(filtereddf)
+            for wp in self.workplaces:
+                wpdf:DataFrame=filtereddf.where(filtereddf[GOOGLE.Workplace]==wp)
+                wpdf=wpdf.dropna(axis=0,how='all')
+                if wpdf.empty:
+                    continue
+                wpdf = self.aggrateDuration(wpdf)
+                newDf = newDf.append(wpdf.drop_duplicates())
         return newDf
 
     def aggrateDuration(self, filtereddf):

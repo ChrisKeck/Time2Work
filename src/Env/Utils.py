@@ -128,7 +128,7 @@ class TimesFormatter:
             utc_datetime = dtime
         elif dtime:
             utc_datetime = datetime.strptime(
-                    str(dtime), "%Y-%m-%dT%H:%M:%S.%fZ")
+                str(dtime), "%Y-%m-%dT%H:%M:%S.%fZ")
         else:
             raise ValueError("dtime ist null!")
         return utc_datetime.replace(tzinfo=None)
@@ -163,8 +163,14 @@ class TimesFormatter:
 
     @staticmethod
     def toDurationString(dur: int) -> str:
+        if  dur<0:
+            dur=dur*(-1)
         hours, minutes = divmod(int(dur), 60)
-        durdate = datetime(1, 1, 1, hours, minutes)
+        durdate=None
+        try:
+            durdate = datetime(1, 1, 1, hours, minutes)
+        except  ValueError as ex:
+            pass
         durdate = TimesFormatter.roundTime(durdate)
         return "{:02d}:{:02d}".format(durdate.hour, durdate.minute)
 
@@ -220,7 +226,7 @@ class TimesFormatter:
         begin = TimesFormatter.convertTimezone(begin)
         end = TimesFormatter.convertTimezone(end)
         begin = TimesFormatter.roundTime(
-                begin, "+")
+            begin, "+")
         end = TimesFormatter.roundTime(end, "+")
         return begin, end
 

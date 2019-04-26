@@ -22,9 +22,6 @@ class TransformerTest(unittest.TestCase):
         with open(root + "/resources/history-2018-01-01.kml", "r", encoding="utf-8") as f:
             url = f.read()
         self.url = url
-        with open(root + "/resources/history-2018-01-01.kml", "r", encoding="utf-8") as f:
-            url2 = f.read()
-        self.url2 = url2
         self.wid = self.workplaces.timestamp + self.workplaces.id
 
     def tearDown(self):
@@ -54,12 +51,6 @@ class TransformerTest(unittest.TestCase):
         assert os.path.exists(root+ "/target/ba_" + self.wid + ".xlsx")
         assert os.path.exists(root+ "/target/iso_" + self.wid + ".xlsx")
 
-    def test_WennTransformiertWurde_DannExistierenDieEntsprechendenDateien2(self):
-        transformer = self.createTransformer(self.url2)
-        transformer.transform(datetime(2018, 1, 2), datetime(
-                2018, 1, 2), self.createFinalizers())
-        assert os.path.exists(root+ "/target/ba_" + self.wid + ".xlsx")
-        assert os.path.exists(root+ "/target/iso_" + self.wid + ".xlsx")
 
     def testWennOhneAenderungenDerDatenTransformiertWurde_DannExistierenDieEntsprechendeDatei(self):
         pathClean = {

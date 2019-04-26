@@ -63,20 +63,25 @@ class WorkplaceBuilder(FrameBuilder):
         is_work = False
         for work in workplaces:
             text: str = str(work)
-            if (name and text.find(name) > -1) or \
-                    (adress and text.find(adress) > -1):
+            if (name and name.find(text) > -1) or \
+                    (adress and adress.find(text) > -1):
                 is_work = True
                 break
         return is_work
 
     def __markWork(self, row):
         for elem in self.places_to_work:
-            workplaces: list = self.places_to_work.get(elem)
+            item=elem
+            workplaces: list = self.places_to_work.get(item)
+            is_workplace=False
             is_workplace = self.is_workplace(row, workplaces)
             value = ""
             if is_workplace:
-                value = str(elem)
-                LOGGER.info("Der Arbeitsplatz " + elem +
+                value = str(item)
+                LOGGER.info("Der Arbeitsplatz " + value +
                             " wurde gefunden")
-            row[GOOGLE.Workplace] = value
+                row[GOOGLE.Workplace] = value
+                break
+            else:
+                row[GOOGLE.Workplace] =""
         return row
