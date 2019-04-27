@@ -53,12 +53,6 @@ class TransformerTimePoiMock(TransformerMock):
                                PauseDurationBuilder()])
 
 
-class ConfigMock(Config):
-
-    @property
-    def section_places(self) -> Iterable:
-        return Config().section_places
-
 
 class PublisherMock(FramePublisher):
 

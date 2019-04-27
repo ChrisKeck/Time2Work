@@ -100,7 +100,7 @@ class IndexBuilder(FrameBuilder):
         self.build_date = datum
 
     def _build_data(self, df: DataFrame) -> DataFrame:
-        df = self._add_column(df, GOOGLE.Index, df[Env.TimeConstants.GOOGLE.Description])
+        df = self._add_column(df, GOOGLE.Index, df[GOOGLE.Description])
         df = self._add_column(df, GOOGLE.BuildDate, self.build_date)
         return df
 
