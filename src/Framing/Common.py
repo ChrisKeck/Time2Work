@@ -6,7 +6,7 @@ from datetime import date, datetime, timedelta
 from pandas.core.frame import DataFrame
 
 from Env.TimeConstants import GOOGLE
-from Env.Utils import ColumnsWorker, TimesFormatter, logFrame
+from Env.Utils import ColumnsWorker, TimesFormatter, log_frame
 from config import LOGGER
 
 
@@ -23,7 +23,7 @@ class FrameBuilder(object):
         name = self.__class__
         if inst:
             name = inst
-        logFrame(df, name)
+        log_frame(df, name)
 
     def build_frame(self, df: DataFrame) -> DataFrame:
         if df.empty:
@@ -38,36 +38,36 @@ class FrameBuilder(object):
 
     @classmethod
     def _get_columns_in_frame(cls, df: DataFrame, columns: list) -> list:
-        return ColumnsWorker.getColumnsInFrame(df, columns)
+        return ColumnsWorker.get_columns_in_frame(df, columns)
 
     @classmethod
     def _reassign_columns(cls, df: DataFrame, columns: list) -> DataFrame:
-        return ColumnsWorker.reassignColumns(df, columns)
+        return ColumnsWorker.reassign_columns(df, columns)
 
     @classmethod
     def _add_column(cls, df: DataFrame, name: str, value=None) -> DataFrame:
-        return ColumnsWorker.addColumn(df, name, value)
+        return ColumnsWorker.add_column(df, name, value)
 
     @classmethod
     def _add_columns(cls, df: DataFrame, names, value=None) -> DataFrame:
         if isinstance(names, list):
             for name in names:
-                df = ColumnsWorker.addColumn(df, name, value)
+                df = ColumnsWorker.add_column(df, name, value)
         else:
-            df = ColumnsWorker.addColumns(names, df, value)
+            df = ColumnsWorker.add_columns(names, df, value)
         return df
 
     @classmethod
     def _drop_inverted_columns(cls, df: DataFrame, columns: list) -> DataFrame:
-        return ColumnsWorker.removeOtherColumns(columns, df)
+        return ColumnsWorker.remove_other_columns(columns, df)
 
     @classmethod
     def _drop_columns(cls, df: DataFrame, columns: list) -> DataFrame:
-        return ColumnsWorker.dropColumns(df, columns)
+        return ColumnsWorker.drop_columns(df, columns)
 
     @classmethod
     def _rename_columns(cls, df: DataFrame, col: dict):
-        return ColumnsWorker.renameColumns(df, col)
+        return ColumnsWorker.rename_columns(df, col)
 
     @classmethod
     def _call_each_row(cls, df: DataFrame, func) -> DataFrame:
@@ -115,19 +115,19 @@ class TimeBuilder(FrameBuilder):
     def _build_data(self, df: DataFrame) -> DataFrame:
 
         def convert(row):
-            return self.__converttime(row, self.hours_for_tz)
+            return self.__convert_time(row, self.hours_for_tz)
 
         df = self._call_each_row(df, convert)
         return df
 
-    def __converttime(self, row, hours: int):
+    def __convert_time(self, row, hours: int):
         b_time, e_time = self.__getTimeRange(row[GOOGLE.BeginDate],
                                              row[GOOGLE.EndDate],
                                              self.build_date.date(),
                                              hours)
         row[GOOGLE.BeginDate], row[GOOGLE.BeginTime] = b_time.date(), b_time.time()
         row[GOOGLE.EndDate], row[GOOGLE.EndTime] = e_time.date(), e_time.time()
-        row[GOOGLE.Duration] = TimesFormatter.calculateDuration(b_time, e_time)
+        row[GOOGLE.Duration] = TimesFormatter.calculate_duration(b_time, e_time)
         return row
 
     def __add_timezone(self, dt: datetime, hours_to_add: int) -> datetime:
@@ -135,8 +135,8 @@ class TimeBuilder(FrameBuilder):
 
     def __getTimeRange(self, begin: str, end: str,
                        build: date, hours: int):
-        b_time, e_time = TimesFormatter.convertToDatetime(begin=begin,
-                                                          end=end)
+        b_time, e_time = TimesFormatter.convert_to_datetime(begin=begin,
+                                                            end=end)
         b_time = self.__add_timezone(b_time, hours)
         e_time = self.__add_timezone(e_time, hours)
         if e_time > datetime(build.year, build.month, build.day, hour=23,

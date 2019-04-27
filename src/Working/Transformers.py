@@ -8,7 +8,7 @@ from os import path
 import pandas
 from pandas.core.frame import DataFrame
 
-from Env.Utils import logFrame
+from Env.Utils import log_frame
 from Framing.Common import (BuildContainer, FrameBuilder, IndexBuilder, TimeBuilder)
 from Framing.Custom import PauseDurationBuilder, WorkplaceBuilder
 from Framing.Grouping import DurationGroupBuilder
@@ -44,8 +44,8 @@ class Transformer(object):
         for elem in text_date_dict:
             other = self.__buildSingleFrame(elem, text_date_dict[elem])
             if other.empty:
-                logFrame(df,
-                         self,
+                log_frame(df,
+                          self,
                          "Es wird das bis jetzt produzierte DataFrame angezeigt,\
                          weil der neue Teil \"%s\" bei der Verarbeitung leer geworden \
                          ist!".format(elem))
@@ -71,7 +71,7 @@ class Transformer(object):
             if cleaned.empty:
                 errorpath = path.join(path.dirname(str(item)),
                                       "error_" + path.basename(item))
-                logFrame(df, item, "Das ursprüngliche DataFrame wird wegen keinen Daten \
+                log_frame(df, item, "Das ursprüngliche DataFrame wird wegen keinen Daten \
                                     unter dem Pfad %s gespeichert.".format(errorpath))
                 self._save_frame(df, errorpath)
             else:

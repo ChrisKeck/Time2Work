@@ -16,26 +16,28 @@ class Config(object):
         """
         if file is None:
             return
-        self.config: ConfigParser = ConfigParser()
-        success = self.config.read(file, encoding="utf-8")
+        self.time2work_config: ConfigParser = ConfigParser()
+        success = self.time2work_config.read(file, encoding="utf-8")
 
-        self.__check_file_exists(file,success)
+        self.__check_file_exists(file, success)
 
         self.__workplaces = self.__get_values("Main", "workplaces")
         dir_path = os.path.dirname(file)
-        file = dir_path + "/" + self.config.get("Main", "auth", fallback=None)
+        file = dir_path + "/" + self.time2work_config.get("Main", "auth", fallback=None)
         self.__check_file_exists(file, [file])
         with open(file, encoding="utf-8") as f:
             self.__auth = f.read()
 
-    def __check_file_exists(self, file, success:list):
+    @staticmethod
+    def __check_file_exists(file, success: list):
         if not file in success:
             with open(file, "w+", encoding="utf-8"):
+                # Überprüfung abgeschlossen
                 pass
             raise FileNotFoundError(file + " nicht gefunden!")
 
     def __get_values(self, key, option) -> list:
-        return self.config.get(key, option, fallback="").split(self.delimiter)
+        return self.time2work_config.get(key, option, fallback="").split(self.delimiter)
 
     def __get_dict(self, option: str) -> dict:
         result = dict()

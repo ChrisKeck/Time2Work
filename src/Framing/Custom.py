@@ -15,7 +15,7 @@ from config import LOGGER
 
 class PauseDurationBuilder(FrameBuilder):
 
-    def _build_data(self, df: object) -> object:
+    def _build_data(self, df: DataFrame) -> DataFrame:
         def set_pause(row):
             return self.__set_pause(row)
 
@@ -28,8 +28,8 @@ class PauseDurationBuilder(FrameBuilder):
         end = row[GOOGLE.EndTime]
         if not isinstance(end, time):
             end = end.get(GOOGLE.EndTime, -1)
-        dur = TimesFormatter.calculateDuration(begin,
-                                               end)
+        dur = TimesFormatter.calculate_duration(begin,
+                                                end)
         old_dur = row[GOOGLE.Duration]
         if isinstance(old_dur, Series):
             old_dur = old_dur.get(GOOGLE.Duration, -1)
@@ -50,12 +50,12 @@ class WorkplaceBuilder(FrameBuilder):
     def _build_data(self, df: DataFrame) -> DataFrame:
         df = self._add_column(df, GOOGLE.Workplace, df[GOOGLE.Name])
 
-        def markWork(x):
-            return self.__markWork(x)
+        def mark_work(x):
+            return self.__mark_work(x)
 
-        return self._call_each_row(df, markWork)
+        return self._call_each_row(df, mark_work)
 
-    def is_workplace(self, row, workplaces):
+    def __is_workplace(self, row, workplaces):
         name = row[GOOGLE.Name]
         adress = row[GOOGLE.Address]
         if not isinstance(adress, str) and numpy.isnan(adress):
@@ -69,13 +69,11 @@ class WorkplaceBuilder(FrameBuilder):
                 break
         return is_work
 
-    def __markWork(self, row):
+    def __mark_work(self, row):
         for elem in self.places_to_work:
             item=elem
             workplaces: list = self.places_to_work.get(item)
-            is_workplace=False
-            is_workplace = self.is_workplace(row, workplaces)
-            value = ""
+            is_workplace = self.__is_workplace(row, workplaces)
             if is_workplace:
                 value = str(item)
                 LOGGER.info("Der Arbeitsplatz " + value +

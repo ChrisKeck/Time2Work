@@ -11,39 +11,38 @@ from Framing.Grouping import DurationGroupBuilder
 
 class Test(unittest.TestCase):
 
-
     def setUp(self):
         self.df = DataFrame(
-                {GOOGLE.BuildDate: [datetime(2000, 1, 1).date(),
-                                    datetime(2000, 1, 1).date()],
-                 GOOGLE.BeginDate: [datetime(2000, 1, 1).date(),
-                                    datetime(2000, 1, 1).date()],
-                 GOOGLE.BeginTime: [datetime(2000, 1, 1, 12, 30).time(),
-                                    datetime(2000, 1, 1, 17).time()],
-                 GOOGLE.EndDate: [datetime(2000, 1, 1).date(),
-                                  datetime(2000, 1, 1).date()],
-                 GOOGLE.EndTime: [datetime(2000, 1, 1, 13, 30).time(),
-                                  datetime(2000, 1, 1, 18).time()],
-                 GOOGLE.Workplace: ["ISO", "ISO"],
-                 GOOGLE.Duration: [100, 150]})
+            {GOOGLE.BuildDate: [datetime(2000, 1, 1).date(),
+                                datetime(2000, 1, 1).date()],
+             GOOGLE.BeginDate: [datetime(2000, 1, 1).date(),
+                                datetime(2000, 1, 1).date()],
+             GOOGLE.BeginTime: [datetime(2000, 1, 1, 12, 30).time(),
+                                datetime(2000, 1, 1, 17).time()],
+             GOOGLE.EndDate: [datetime(2000, 1, 1).date(),
+                              datetime(2000, 1, 1).date()],
+             GOOGLE.EndTime: [datetime(2000, 1, 1, 13, 30).time(),
+                              datetime(2000, 1, 1, 18).time()],
+             GOOGLE.Workplace: ["ISO", "ISO"],
+             GOOGLE.Duration: [100, 150]})
 
     def tearDown(self):
         pass
 
     def appendRows(self, df):
         additional = DataFrame(
-                {GOOGLE.BuildDate: [datetime(2000, 1, 1).date(),
-                                    datetime(2000, 1, 1).date()],
-                 GOOGLE.BeginDate: [datetime(2000, 1, 1).date(),
-                                    datetime(2000, 1, 1).date()],
-                 GOOGLE.BeginTime: [datetime(2000, 1, 1, 18, 15).time(),
-                                    datetime(2000, 1, 1, 19, 15).time()],
-                 GOOGLE.EndDate: [datetime(2000, 1, 1).date(),
-                                  datetime(2000, 1, 1).date()],
-                 GOOGLE.EndTime: [datetime(2000, 1, 1, 19).time(),
-                                  datetime(2000, 1, 1, 20).time()],
-                 GOOGLE.Workplace: ["Test", "ISO"],
-                 GOOGLE.Duration: [100, 150]})
+            {GOOGLE.BuildDate: [datetime(2000, 1, 1).date(),
+                                datetime(2000, 1, 1).date()],
+             GOOGLE.BeginDate: [datetime(2000, 1, 1).date(),
+                                datetime(2000, 1, 1).date()],
+             GOOGLE.BeginTime: [datetime(2000, 1, 1, 18, 15).time(),
+                                datetime(2000, 1, 1, 19, 15).time()],
+             GOOGLE.EndDate: [datetime(2000, 1, 1).date(),
+                              datetime(2000, 1, 1).date()],
+             GOOGLE.EndTime: [datetime(2000, 1, 1, 19).time(),
+                              datetime(2000, 1, 1, 20).time()],
+             GOOGLE.Workplace: ["Test", "ISO"],
+             GOOGLE.Duration: [100, 150]})
         df = df.append(additional)
         return df
 

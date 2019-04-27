@@ -15,9 +15,8 @@ from src.config import LOGGER
 
 class ColumnsWorker(object):
 
-
     @staticmethod
-    def getColumnsInFrame(df: DataFrame, columns: list) -> list:
+    def get_columns_in_frame(df: DataFrame, columns: list) -> list:
         dropped_columns = list()
         for item in columns:
             if item in df.columns:
@@ -28,12 +27,12 @@ class ColumnsWorker(object):
         return dropped_columns
 
     @staticmethod
-    def reassignColumns(df: DataFrame, columns: list) -> DataFrame:
-        columns = ColumnsWorker.getColumnsInFrame(df, columns)
+    def reassign_columns(df: DataFrame, columns: list) -> DataFrame:
+        columns = ColumnsWorker.get_columns_in_frame(df, columns)
         return df[columns]
 
     @staticmethod
-    def __fillList(total_rows, tempvalues) -> list:
+    def __fill_list(total_rows, tempvalues) -> list:
         values = list()
         if len(tempvalues) == 1 and total_rows > 1:
             for dummy in range(0, total_rows):
@@ -43,16 +42,16 @@ class ColumnsWorker(object):
         return values
 
     @staticmethod
-    def addColumn(df: DataFrame, name: str, value=None) -> DataFrame:
+    def add_column(df: DataFrame, name: str, value=None) -> DataFrame:
         values = list()
         total_rows = len(df.axes[0])
         if isinstance(value, Series):
             tempvalues = value.get_values()
-            values = ColumnsWorker.__fillList(total_rows, tempvalues)
+            values = ColumnsWorker.__fill_list(total_rows, tempvalues)
         elif isinstance(value, ndarray):
-            values = ColumnsWorker.__fillList(total_rows, value)
+            values = ColumnsWorker.__fill_list(total_rows, value)
         elif isinstance(value, Iterable) and not isinstance(value, str):
-            values = ColumnsWorker.__fillList(total_rows, list(value))
+            values = ColumnsWorker.__fill_list(total_rows, list(value))
         else:
             for dummy in range(0, total_rows):
                 values.append(value)
@@ -60,25 +59,25 @@ class ColumnsWorker(object):
         return df
 
     @staticmethod
-    def dropColumns(df: DataFrame, columns: list) -> DataFrame:
-        dropped_columns = ColumnsWorker.getColumnsInFrame(df, columns)
+    def drop_columns(df: DataFrame, columns: list) -> DataFrame:
+        dropped_columns = ColumnsWorker.get_columns_in_frame(df, columns)
         return df.drop(dropped_columns, axis=1)
 
     @staticmethod
-    def renameColumns(df: DataFrame, col: dict):
+    def rename_columns(df: DataFrame, col: dict):
         torename = dict()
         for item in col:
             if item == col[item]:
                 continue
             torename.update({item: col[item]})
-        df = ColumnsWorker.dropColumns(df, list(torename.values().__iter__()))
+        df = ColumnsWorker.drop_columns(df, list(torename.values().__iter__()))
         df = df.rename(torename,
                        axis=1)
 
         return df
 
     @staticmethod
-    def collectColumnsFromInstance(instance):
+    def collect_columns_from_instance(instance):
         names = dir(instance)
         values = list()
         for name in names:
@@ -88,18 +87,18 @@ class ColumnsWorker(object):
                     values.append(func)
                 except Exception as e:
                     LOGGER.error(
-                            "{0} ist nicht abrufbar!\nException: {1}", name, e)
+                        "{0} ist nicht abrufbar!\nException: {1}", name, e)
                     raise
         return values
 
     @staticmethod
-    def removeColumns(instance, df: DataFrame):
-        values = ColumnsWorker.collectColumnsFromInstance(instance)
+    def remove_columns(instance, df: DataFrame):
+        values = ColumnsWorker.collect_columns_from_instance(instance)
         return df.drop(values, axis=1)
 
     @staticmethod
-    def removeOtherColumns(instance, df: DataFrame):
-        values = ColumnsWorker.collectColumnsFromInstance(instance)
+    def remove_other_columns(instance, df: DataFrame):
+        values = ColumnsWorker.collect_columns_from_instance(instance)
         torems = list()
         for item in df.columns:
             if item not in values:
@@ -107,20 +106,19 @@ class ColumnsWorker(object):
         return df.drop(torems, axis=1)
 
     @staticmethod
-    def addColumns(instance, df: DataFrame, default=None):
-        values = ColumnsWorker.collectColumnsFromInstance(instance)
+    def add_columns(instance, df: DataFrame, default=None):
+        values = ColumnsWorker.collect_columns_from_instance(instance)
         for item in values:
             if item in df:
                 continue
-            df = ColumnsWorker.addColumn(df, item, default)
+            df = ColumnsWorker.add_column(df, item, default)
         return df
 
 
 class TimesFormatter:
 
-
     @staticmethod
-    def convertTimezone(dtime) -> datetime:
+    def convert_timezone(dtime) -> datetime:
         """
         Convert datetimes from UTC to localtime zone
         """
@@ -134,7 +132,7 @@ class TimesFormatter:
         return utc_datetime.replace(tzinfo=None)
 
     @staticmethod
-    def roundTime(dt: datetime, shiftOp="+") -> datetime:
+    def round_time(dt: datetime, shift_op="+") -> datetime:
         ardt: Arrow = Arrow.fromdatetime(dt)
         minute = 0
         if 0 < dt.minute <= 15:
@@ -145,13 +143,13 @@ class TimesFormatter:
             minute = 45 - dt.minute
         elif dt.minute > 45:
             minute = 60 - dt.minute
-        if shiftOp != "+":
+        if shift_op != "+":
             ardt = ardt.shift(minutes=-15)
         ardt = ardt.shift(minutes=minute)
         return ardt.datetime.replace(second=0, microsecond=0, tzinfo=None)
 
     @staticmethod
-    def calculateDuration(b_time, e_time) -> int:
+    def calculate_duration(b_time, e_time) -> int:
         if isinstance(b_time, time) or isinstance(e_time, time):
             b_time = datetime(1, 1, 1, b_time.hour, b_time.minute)
             e_time = datetime(1, 1, 1, e_time.hour, e_time.minute)
@@ -162,28 +160,28 @@ class TimesFormatter:
         return duration
 
     @staticmethod
-    def toDurationString(dur: int) -> str:
-        if  dur<0:
-            dur=dur*(-1)
+    def to_duration_string(dur: int) -> str:
+        if dur < 0:
+            dur = dur * (-1)
         hours, minutes = divmod(int(dur), 60)
-        durdate=None
+        durdate = None
         try:
             durdate = datetime(1, 1, 1, hours, minutes)
         except  ValueError as ex:
             pass
-        durdate = TimesFormatter.roundTime(durdate)
+        durdate = TimesFormatter.round_time(durdate)
         return "{:02d}:{:02d}".format(durdate.hour, durdate.minute)
 
     @staticmethod
-    def toTimeString(ti: time, isProcent=False) -> str:
-        if isProcent:
-            res = TimesFormatter.toTimeInProcentString(ti)
+    def to_time_string(ti: time, is_procent=False) -> str:
+        if is_procent:
+            res = TimesFormatter.to_time_in_procent_string(ti)
         else:
             res = "{:%H:%M}".format(datetime(1, 1, 1, ti.hour, ti.minute))
         return res
 
     @staticmethod
-    def toTimeInProcentString(ti: time) -> str:
+    def to_time_in_procent_string(ti: time) -> str:
         procent: float = 0
         durdate = datetime(1, 1, 1, ti.hour, ti.minute)
         if durdate.minute == 15:
@@ -196,24 +194,24 @@ class TimesFormatter:
         return "{:.2f}".format(timeprocent)
 
     @staticmethod
-    def toDateString(da: date, formatstr="%d.%m.%Y") -> str:
+    def to_date_string(da: date, formatstr="%d.%m.%Y") -> str:
         temp = datetime(da.year, da.month, da.day)
         return temp.strftime(formatstr)
 
     @staticmethod
-    def __calcMinutesFromString(b_time) -> int:
+    def __calc_minutes_from_string(b_time) -> int:
         bsplitted = str(b_time).split(":")
         bhours = int(bsplitted[0]) * 60
         minutes = bhours + int(bsplitted[1])
         return minutes
 
     @staticmethod
-    def calculateMinutes(b_time: str) -> int:
-        bmins = TimesFormatter.__calcMinutesFromString(b_time)
+    def calculate_minutes(b_time: str) -> int:
+        bmins = TimesFormatter.__calc_minutes_from_string(b_time)
         return bmins
 
     @staticmethod
-    def getRangeBetweenDays(b_time: datetime, e_time: datetime) -> Iterable:
+    def get_range_between_days(b_time: datetime, e_time: datetime) -> Iterable:
         days = list()
         b_time = datetime(b_time.year, b_time.month, b_time.day)
         e_time = datetime(e_time.year, e_time.month, e_time.day)
@@ -222,16 +220,16 @@ class TimesFormatter:
         return days
 
     @staticmethod
-    def convertToDatetime(begin: str, end: str):
-        begin = TimesFormatter.convertTimezone(begin)
-        end = TimesFormatter.convertTimezone(end)
-        begin = TimesFormatter.roundTime(
+    def convert_to_datetime(begin: str, end: str):
+        begin = TimesFormatter.convert_timezone(begin)
+        end = TimesFormatter.convert_timezone(end)
+        begin = TimesFormatter.round_time(
             begin, "+")
-        end = TimesFormatter.roundTime(end, "+")
+        end = TimesFormatter.round_time(end, "+")
         return begin, end
 
 
-def logFrame(df, inst=None, msg=""):
+def log_frame(df, inst=None, msg=""):
     name = "#UNKNOWN#"
     if inst:
         name = inst

@@ -97,10 +97,10 @@ class TimelineReader:
 
     def readTime(self, date_von: datetime, date_bis: datetime) -> dict:
         date_text = dict()
-        days = TimesFormatter.getRangeBetweenDays(date_von, date_bis)
+        days = TimesFormatter.get_range_between_days(date_von, date_bis)
         for current in days:
-            current = TimesFormatter.convertTimezone(current)
-            now = TimesFormatter.convertTimezone(datetime.now())
+            current = TimesFormatter.convert_timezone(current)
+            now = TimesFormatter.convert_timezone(datetime.now())
             if current < now:
                 text = self.reader.readText(current)
                 date_text.update({current: text})

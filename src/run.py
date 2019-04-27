@@ -47,16 +47,16 @@ def main(argv):
         elif opt in ("-o", "--output"):
             output = arg
         elif opt in ("-f", "--from"):
-            von = convertDate(arg)
+            von = convert_date(arg)
         elif opt in ("-t", "--till"):
-            bis = convertDate(arg)
+            bis = convert_date(arg)
     Config.DEBUG = debug
     config = create_config(setting_file)
     worker = Time2Work(config, output)
     worker.start(von, bis)
 
 
-def convertDate(arg):
+def convert_date(arg):
     try:
         res = datetime.strptime(arg, "%d.%m.%Y")
         return res
