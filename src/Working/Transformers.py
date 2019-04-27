@@ -26,11 +26,11 @@ class Transformer:
         framebuilder = FrameCollector()
         return framebuilder
 
-    def __buildSingleFrame(self, elem, text):
+    def __build_single_frame(self, elem, text):
         LOGGER.info("Building Frame For " + str(elem) + "...")
         framebuilder: FrameCollector = self.__create_framebuilder()
         other = framebuilder.build(text)
-        builder = self._createBuilder(elem)
+        builder = self._create_builder(elem)
         other = builder.build_frame(other)
         LOGGER.info("Frame built For " + repr(elem) + "\n" + repr(other))
         return other
@@ -42,7 +42,7 @@ class Transformer:
         text_date_dict: dict = time_reader.readTime(date_von, date_bis)
         df = DataFrame()
         for elem in text_date_dict:
-            other = self.__buildSingleFrame(elem, text_date_dict[elem])
+            other = self.__build_single_frame(elem, text_date_dict[elem])
             if other.empty:
                 log_frame(df,
                           self,
@@ -63,9 +63,9 @@ class Transformer:
     def transform(self, date_von: datetime,
                   date_bis: datetime, custom_work_paths: dict) -> None:
         df: DataFrame = self.__tranform_to_frame(date_von, date_bis)
-        self.__finalizeFrame(df, custom_work_paths)
+        self.__finalize_frame(df, custom_work_paths)
 
-    def __finalizeFrame(self, df: DataFrame, custom_work_paths: dict) -> None:
+    def __finalize_frame(self, df: DataFrame, custom_work_paths: dict) -> None:
         for item in custom_work_paths:
             cleaned = self.__clean(df, custom_work_paths[item])
             if cleaned.empty:
@@ -78,7 +78,7 @@ class Transformer:
                 self._save_frame(cleaned, str(item))
 
     @abstractmethod
-    def _createBuilder(self, dat: datetime) -> FrameBuilder:
+    def _create_builder(self, dat: datetime) -> FrameBuilder:
         raise NotImplementedError("_Builder.build ist abstrakt!")
 
     def _create_timereader(self) -> TimelineReader:
@@ -102,7 +102,7 @@ class CommandToExcelTransformer(Transformer):
         self.content = content
         self.workplaces = workplaces
 
-    def _createBuilder(self, dat: datetime) -> FrameBuilder:
+    def _create_builder(self, dat: datetime) -> FrameBuilder:
         wp = self.workplaces
         return BuildContainer([GOOGLEFrameBuilder(),
                                IndexBuilder(dat),
@@ -129,11 +129,11 @@ class FramePublisher:
     def integrate(self, other: DataFrame):
         # df: DataFrame = self.df
         # self._log_frame(df, self)
-        # self._logFrame(repr(df.to_dict()), self)
+        # self._log_frame(repr(df.to_dict()), self)
         pass
 
     @staticmethod
-    def _logFrame(df: object, inst: object = None) -> None:
+    def _log_frame(df: object, inst: object = None) -> None:
         name = inst
         with pandas.option_context('display.max_rows', None, 'display.max_columns', None):
             LOGGER.warning("##########\nGesamtes Frame in Klasse \"%s\":\n%s\n#############",

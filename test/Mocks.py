@@ -43,13 +43,13 @@ class NoBuildingTransformerMock(TransformerMock):
     def _create_reader(self) -> TimeReader:
         return BaseReaderMock(self.content)
 
-    def _createBuilder(self, dummy: datetime) -> FrameBuilder:
+    def _create_builder(self, dummy: datetime) -> FrameBuilder:
         return BuildContainer([])
 
 
 class TransformerTimePoiMock(TransformerMock):
 
-    def _createBuilder(self, dat: datetime) -> FrameBuilder:
+    def _create_builder(self, dat: datetime) -> FrameBuilder:
         return BuildContainer([GOOGLEFrameBuilder(),
                                IndexBuilder(dat),
                                TimeBuilder(dat),

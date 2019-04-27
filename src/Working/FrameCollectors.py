@@ -35,28 +35,36 @@ class FrameCollector:
     @staticmethod
     def __collect_place(dic: dict, elem: Tag):
         if elem.name == 'ExtendedData':
-            for child in elem.contents:
-                if isinstance(child, Tag) and \
-                        child.attrs['name'] == 'Category':
-                    text = child.text
-                    if child.text.strip() == '':
-                        text = 'Standing'
-                    name = child.attrs['name']
-                    FrameCollector.logTag(elem)
-                    dic[name] = text
+            FrameCollector.__process_extended_data(dic, elem)
         elif elem.name == 'TimeSpan':
-            for child in elem.contents:
-                if isinstance(child, Tag):
-                    FrameCollector.logTag(elem)
-                    dic[child.name] = child.text
+            FrameCollector.__process_timespan(dic, elem)
 
         else:
-            FrameCollector.logTag(elem)
+            FrameCollector.log_tag(elem)
             dic[elem.name] = elem.text
         return dic
 
     @staticmethod
-    def logTag(elem):
+    def __process_timespan(dic, elem):
+        for child in elem.contents:
+            if isinstance(child, Tag):
+                FrameCollector.log_tag(elem)
+                dic[child.name] = child.text
+
+    @staticmethod
+    def __process_extended_data(dic, elem):
+        for child in elem.contents:
+            if isinstance(child, Tag) and \
+                    child.attrs['name'] == 'Category':
+                text = child.text
+                if child.text.strip() == '':
+                    text = 'Standing'
+                name = child.attrs['name']
+                FrameCollector.log_tag(elem)
+                dic[name] = text
+
+    @staticmethod
+    def log_tag(elem):
         LOGGER.info('Der Tag mit den Namen "' +
                     elem.name + '" und dem Wert "' +
                     elem.text + '" wird hinzugefügt')
