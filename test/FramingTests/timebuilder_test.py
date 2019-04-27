@@ -12,13 +12,12 @@ from config import LOGGER
 
 class TimeBuilderTest(unittest.TestCase):
 
-
     def createBuilder(self, date) -> FrameBuilder:
         return TimeBuilder(date, 0)
 
     def setUp(self):
-        self.df: DataFrame = DataFrame({GOOGLE.BeginDate: '2000-01-01T10:30:00.000Z',GOOGLE.EndDate:
-                                                           '2000-01-01T11:59:00.000Z'},[1,2])
+        self.df: DataFrame = DataFrame({GOOGLE.BeginDate: '2000-01-01T10:30:00.000Z', GOOGLE.EndDate:
+            '2000-01-01T11:59:00.000Z'}, [1, 2])
 
     def tearDown(self):
         pass
@@ -39,7 +38,7 @@ class TimeBuilderTest(unittest.TestCase):
         builder = self.createBuilder(datetime(2000, 1, 1))
 
         df: DataFrame = builder.build_frame(self.df)
-        begin=df[GOOGLE.BeginDate]
+        begin = df[GOOGLE.BeginDate]
         self.assertEqual(begin.get_values()[0],
                          datetime(2000, 1, 1).date(), "")
         self.assertEqual(df[GOOGLE.EndDate].get_values()[0],

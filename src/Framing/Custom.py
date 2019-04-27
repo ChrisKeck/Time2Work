@@ -71,7 +71,7 @@ class WorkplaceBuilder(FrameBuilder):
 
     def __mark_work(self, row):
         for elem in self.places_to_work:
-            item=elem
+            item = elem
             workplaces: list = self.places_to_work.get(item)
             is_workplace = self.__is_workplace(row, workplaces)
             if is_workplace:
@@ -81,5 +81,5 @@ class WorkplaceBuilder(FrameBuilder):
                 row[GOOGLE.Workplace] = value
                 break
             else:
-                row[GOOGLE.Workplace] =""
+                row[GOOGLE.Workplace] = ""
         return row

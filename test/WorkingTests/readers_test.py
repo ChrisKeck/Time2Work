@@ -3,13 +3,12 @@
 import unittest
 from datetime import datetime
 
-from Mocks import BaseReaderMock
+from Mocks import BaseReaderMock, root
 from Working.TimeReaders import TimelineReader
 from config import LOGGER
 
 
 class Test(unittest.TestCase):
-
 
     def setUp(self):
         pass
@@ -18,7 +17,7 @@ class Test(unittest.TestCase):
         pass
 
     def testWennFuenfTageAbefragtWerdenDannWerdenFuenfTageErmittelt(self):
-        with open("/home/kec/PycharmProjects/Time2Work/resources/history-2018-01-01.kml", "r", encoding="utf-8") as f:
+        with open(root + "/test/history-2018-01-01.kml", "r", encoding="utf-8") as f:
             url = f.read()
         timeline = TimelineReader(BaseReaderMock(url))
         actual = timeline.readTime(datetime(2017, 5, 3), datetime(2017, 5, 4))

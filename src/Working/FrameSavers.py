@@ -3,8 +3,9 @@
 import os
 from abc import abstractmethod
 
-from config import LOGGER
 from pandas.core.frame import DataFrame
+
+from config import LOGGER
 
 
 class FrameSaver(object):

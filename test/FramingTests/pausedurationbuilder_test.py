@@ -11,7 +11,6 @@ from Framing.Custom import PauseDurationBuilder
 
 class PauseDurationBuilderTest(unittest.TestCase):
 
-
     def setUp(self):
         self.df = DataFrame({GOOGLE.BeginTime: [time(10)],
                              GOOGLE.EndTime: [time(13)],

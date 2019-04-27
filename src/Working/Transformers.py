@@ -19,7 +19,7 @@ from Working.TimeReaders import Cmd2FileReader, TimeReader, TimelineReader
 from config import LOGGER
 
 
-class Transformer(object):
+class Transformer:
 
     @staticmethod
     def __create_framebuilder() -> FrameCollector:
@@ -46,9 +46,9 @@ class Transformer(object):
             if other.empty:
                 log_frame(df,
                           self,
-                         "Es wird das bis jetzt produzierte DataFrame angezeigt,\
-                         weil der neue Teil \"%s\" bei der Verarbeitung leer geworden \
-                         ist!".format(elem))
+                          "Es wird das bis jetzt produzierte DataFrame angezeigt,\
+                          weil der neue Teil \"%s\" bei der Verarbeitung leer geworden \
+                          ist!".format(elem))
             else:
                 df = df.append(other)
         df = df.reindex()

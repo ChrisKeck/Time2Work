@@ -11,7 +11,6 @@ from Env.Utils import ColumnsWorker
 
 class Test(unittest.TestCase):
 
-
     def setUp(self):
         pass
 

@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from _collections_abc import Iterable
+import os
 from datetime import datetime
+
+from pandas.core.frame import DataFrame
 
 from Framing.Common import (BuildContainer, FrameBuilder, IndexBuilder, TimeBuilder)
 from Framing.Custom import (PauseDurationBuilder, WorkplaceBuilder)
@@ -9,8 +11,11 @@ from Framing.Grouping import DurationGroupBuilder
 from Framing.Specifics import GOOGLEFrameBuilder
 from Working.TimeReaders import TimeReader
 from Working.Transformers import CommandToExcelTransformer, FramePublisher
-from config import Config
-from pandas.core.frame import DataFrame
+
+root = os.path.expanduser("~/PycharmProjects/Time2Work")
+filedate = "2018-01-01"
+fromnow = datetime(2018, 1, 1)
+tonow = datetime(2018, 1, 1)
 
 
 class BaseReaderMock(TimeReader):
@@ -51,7 +56,6 @@ class TransformerTimePoiMock(TransformerMock):
                                WorkplaceBuilder(self.workplaces),
                                DurationGroupBuilder(self.workplaces.keys()),
                                PauseDurationBuilder()])
-
 
 
 class PublisherMock(FramePublisher):

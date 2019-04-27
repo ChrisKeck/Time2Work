@@ -12,7 +12,6 @@ from config import LOGGER
 
 class BAFormatFinalizerTest(unittest.TestCase):
 
-
     def setUp(self):
         self.df = DataFrame({BA.Duration: [59, 0],
                              BA.Pause: [305, 80],

@@ -10,16 +10,15 @@ from Framing.Common import BuildContainer
 from Framing.Specifics import (BADuplicatesRemoveBuilder, BAFormatFinalizer, BAFrameBuilder, ISODuplicatesRemoveBuilder,
                                ISOFormatFinalizer,
                                ISOFrameBuilder, )
-from Mocks import NoBuildingTransformerMock, PublisherMock, TransformerTimePoiMock
+from Mocks import NoBuildingTransformerMock, PublisherMock, TransformerTimePoiMock, root, filedate, fromnow, tonow
 from config import Config
 
-root = os.path.expanduser("~/PycharmProjects/Time2Work")
+
 class TransformerTest(unittest.TestCase):
 
-
     def setUp(self):
-        self.workplaces = Config(root + "/resources/Time2Work.ini")
-        with open(root + "/resources/history-2018-01-01.kml", "r", encoding="utf-8") as f:
+        self.workplaces = Config(root + "/test/Time2Work.ini")
+        with open(root + "/test/history-" + filedate + ".kml", "r", encoding="utf-8") as f:
             url = f.read()
         self.url = url
         self.wid = self.workplaces.timestamp + self.workplaces.id
@@ -46,19 +45,17 @@ class TransformerTest(unittest.TestCase):
 
     def test_WennTransformiertWurde_DannExistierenDieEntsprechendenDateien(self):
         transformer = self.createTransformer(self.url)
-        transformer.transform(datetime(2018, 1, 1), datetime(
-                2018, 1, 1), self.createFinalizers())
-        assert os.path.exists(root+ "/target/ba_" + self.wid + ".xlsx")
-        assert os.path.exists(root+ "/target/iso_" + self.wid + ".xlsx")
-
+        transformer.transform(fromnow, tonow, self.createFinalizers())
+        assert os.path.exists(root + "/target/ba_" + self.wid + ".xlsx")
+        assert os.path.exists(root + "/target/iso_" + self.wid + ".xlsx")
 
     def testWennOhneAenderungenDerDatenTransformiertWurde_DannExistierenDieEntsprechendeDatei(self):
         pathClean = {
             root + "/target/nobuilders_" + self.wid + ".xlsx": BuildContainer([])}
         transformer = NoBuildingTransformerMock(
-                self.url, self.workplaces.places)
+            self.url, self.workplaces.places)
         transformer.transform(datetime(2018, 7, 20), datetime(
-                2018, 7, 20), pathClean)
+            2018, 7, 20), pathClean)
         assert os.path.exists(root + "/target/nobuilders_" + self.wid + ".xlsx")
         assert os.path.getsize(root + "/target/nobuilders_" +
                                self.wid + ".xlsx") > 1
