@@ -3,7 +3,7 @@
 import unittest
 from datetime import datetime
 
-from Mocks import BaseReaderMock, root
+from utils.Mocks import BaseReaderMock, root
 from Working.TimeReaders import TimelineReader
 from config import LOGGER
 

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from Mocks import root
+from utils.Mocks import root
 from Working.FrameCollectors import FrameCollector
 
 

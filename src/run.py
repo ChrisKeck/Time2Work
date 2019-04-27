@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import os
 import sys
 from datetime import datetime
 from getopt import GetoptError, getopt
@@ -23,7 +24,7 @@ def create_config(setting_file):
 
 def main(argv):
     setting_file = "../resources/Time2Work.ini"
-    output = "C:/TEMP/"
+    output = os.curdir
     von = None
     bis = None
     debug = False

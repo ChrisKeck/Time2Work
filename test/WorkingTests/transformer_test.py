@@ -10,7 +10,7 @@ from Framing.Common import BuildContainer
 from Framing.Specifics import (BADuplicatesRemoveBuilder, BAFormatFinalizer, BAFrameBuilder, ISODuplicatesRemoveBuilder,
                                ISOFormatFinalizer,
                                ISOFrameBuilder, )
-from Mocks import NoBuildingTransformerMock, PublisherMock, TransformerTimePoiMock, root, filedate, fromnow, tonow
+from utils.Mocks import NoBuildingTransformerMock, PublisherMock, TransformerTimePoiMock, root, filedate, fromnow, tonow
 from config import Config
 
 

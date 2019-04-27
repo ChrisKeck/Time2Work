@@ -18,6 +18,8 @@ class Time2Work:
     def create_specific_builders(self, fins):
         fin_list = list()
         for fin in fins:
+            if not fin:
+                continue
             splitted = fin.split(".")
             clsname = splitted[-1]
             splitted.remove(clsname)
